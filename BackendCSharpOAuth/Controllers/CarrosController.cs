@@ -29,7 +29,7 @@ namespace BackendCSharpOAuth.Controllers
             {
 
                 var carros = _servCarros.PesquisarCarro(dto);
-                var totalRegistros = carros.Count();
+                var totalRegistros = _servCarros.RecuperarTotalRegistrosFiltro(dto);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { Content = carros, Quantidade = totalRegistros, Mensagem = "Registros recuperados com sucesso!" });
             }

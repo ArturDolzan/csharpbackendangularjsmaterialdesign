@@ -12,8 +12,12 @@
     function loadPages() {
         
         $scope.currentPage = $scope.paging.current;
+        if(!$scope.carro_search_keywords){
+            $scope.listarCarro();
+        }else{
+            $scope.pesquisarCarro();
+        }
         
-        $scope.listarCarro();
     };
 
     $scope.showToast = function (message) {
@@ -150,9 +154,20 @@
       },
 
       $scope.pesquisarCarro = function(){
+    
+        if(!$scope.carro_search_keywords){
+            $scope.listarCarro();
+            return;
+        }
 
-        carrosFactory.pesquisarCarro($scope.carro_search_keywords).then(function successCallback(response){
-          $scope.paging.total = Math.trunc(response.data.Quantidade / $scope.paging.qtde) + 1;
+        var paginacao = {
+            page: $scope.paging.current,
+            start: $scope.paging.current * $scope.paging.qtde,
+            limit: $scope.paging.qtde
+        };
+
+        carrosFactory.pesquisarCarro(paginacao, $scope.carro_search_keywords).then(function successCallback(response){
+          $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
           $scope.carros = response.data.Content;
         }, function errorCallback(response){
           $scope.showToast(response.data.Mensagem);

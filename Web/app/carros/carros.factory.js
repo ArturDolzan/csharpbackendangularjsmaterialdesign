@@ -47,11 +47,14 @@
         });
     };
 
-    factory.pesquisarCarro = function(keywords){
+    factory.pesquisarCarro = function(paginacao, keywords){
         return $http({
             method: 'POST',
             data: {
-                'ValorPesquisa': keywords
+                'ValorPesquisa': keywords,
+                'Page': paginacao.page,
+                'Start': paginacao.start,
+                'Limit': paginacao.limit
             },
             url: 'http://localhost:55090/api/Carros/Pesquisar'
         });

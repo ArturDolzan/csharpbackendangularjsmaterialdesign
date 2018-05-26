@@ -12,6 +12,7 @@ namespace BackendCSharpOAuth.Servico
     {
         List<Carros> PesquisarCarro(PesquisaDTO dto);
         TotalPaginacaoDTO RecuperarTotalRegistros();
+        TotalPaginacaoDTO RecuperarTotalRegistrosFiltro(PesquisaDTO dto);
         List<Carros> Listar(QueryPaginacaoDTO dto);
         Carros Salvar(Carros carros);
         Carros RecuperarPorId(CodigoPadraoDTO dto);

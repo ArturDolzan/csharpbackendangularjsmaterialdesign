@@ -19,7 +19,7 @@ namespace BackendCSharpOAuth.Servico
 
         public List<Carros> PesquisarCarro(PesquisaDTO dto)
         {
-            return _db.Carros.Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderBy(x => x.Id).ToList();
+            return _db.Carros.Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit).ToList();
         }
 
         public TotalPaginacaoDTO RecuperarTotalRegistros()
@@ -95,6 +95,14 @@ namespace BackendCSharpOAuth.Servico
                 throw new Exception(e.InnerException.InnerException.Message);
             }            
 
+        }
+
+        public TotalPaginacaoDTO RecuperarTotalRegistrosFiltro(PesquisaDTO dto)
+        {
+            return new TotalPaginacaoDTO
+            {
+                Quantidade = _db.Carros.Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).Count()
+            };
         }
 
     }
