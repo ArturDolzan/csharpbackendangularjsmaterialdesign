@@ -176,13 +176,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\app.js" />
-    <Content Include="app\assets\css\custom.css" />
-    <Content Include="app\carros\carros.controller.js" />
-    <Content Include="app\carros\carros.factory.js" />
-    <Content Include="app\carros\novo_carros.template.html" />
-    <Content Include="app\carros\read_carros.template.html" />
-    <Content Include="app\carros\visualizar_carros.template.html" />
     <Content Include="App_Readme\readme.txt" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
