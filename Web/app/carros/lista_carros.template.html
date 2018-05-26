@@ -35,10 +35,13 @@
                     </div>
 
                     <div class="md-secondary-container">
-                        <md-button class="md-raised md-info" ng-click="editarCarro(carro.Id)">Editar</md-button>
-                        <md-button class="md-raised md-danger" ng-click="removerCarro($event, carro.Id)">Remover</md-button>
-                        <!-- 'edit' button will be here -->
-                        <!-- 'delete' button will be here -->
+                        <md-button class="md-fab md-primary" ng-click="editarCarro(carro.Id)" aria-label="Editar">
+                            <md-icon md-svg-src="app/assets/img/edit.svg"></md-icon>
+                        </md-button>
+                        <md-button class="md-fab" ng-click="removerCarro($event, carro.Id)" aria-label="Remover">
+                            <md-icon md-svg-src="app/assets/img/trash.svg"></md-icon>
+                        </md-button>
+ 
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>
