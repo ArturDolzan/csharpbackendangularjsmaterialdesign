@@ -1,0 +1,167 @@
+﻿MyApp.controller('carrosController', function ($scope, $mdDialog, $mdToast, carrosFactory) {
+
+    $scope.currentPage = 0;
+
+    $scope.paging = {
+        total: 1,
+        current: 1,
+        onPageChanged: loadPages,
+        qtde: 5
+    };
+
+    function loadPages() {
+        
+        $scope.currentPage = $scope.paging.current;
+        
+        $scope.listarCarro();
+    };
+
+    $scope.showToast = function (message) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(message)
+                .hideDelay(3000)
+                .position("top left")
+        );
+    },
+
+    $scope.listarCarro = function () {
+        
+        var paginacao = {
+            page: $scope.paging.current,
+            start: $scope.paging.current * $scope.paging.qtde,
+            limit: $scope.paging.qtde
+        };
+        
+        carrosFactory.listarCarro(paginacao).then(function successCallback(response) {
+            $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
+            $scope.carros = response.data.Content;
+        }, function errorCallback(response) {
+            $scope.showToast(response.data.Message);
+        });
+
+    },
+
+    $scope.showNovoCarroForm = function (event) {
+
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: './app/carros/cadastro_carros.template.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            fullscreen: true
+        });
+    },
+
+    $scope.salvarCarro = function () {
+
+        carrosFactory.salvarCarro($scope).then(function successCallback(response) {
+          
+            $scope.showToast(response.data.Mensagem);
+
+            // refresh the list
+            $scope.listarCarro();
+
+            // close dialog
+            $scope.cancel();
+
+            // remove form values
+            $scope.clearCarrosForm();
+
+        }, function errorCallback(response) {
+            $scope.showToast(response.data.Mensagem);
+        });
+    },
+
+    $scope.clearCarrosForm = function () {
+        $scope.Id = "";
+        $scope.Descricao = "";
+    },
+
+    $scope.editarCarro = function (id) {
+
+        // get carro to be edited
+        carrosFactory.editarCarro(id).then(function successCallback(response) {
+
+            // put the values in form
+            $scope.Id = response.data.Content.Id;
+            $scope.Descricao = response.data.Content.Descricao;
+
+            $mdDialog.show({
+                controller: DialogController,
+                templateUrl: './app/carros/cadastro_carros.template.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: true,
+                scope: $scope,
+                preserveScope: true,
+                fullscreen: true
+            }).then(
+                function () { },
+
+                // user clicked 'Cancel'
+                function () {
+                    $scope.clearCarrosForm();
+                }
+            );
+
+        }, function errorCallback(response) {
+            $scope.showToast(response.data.Mensagem);
+        });
+
+    },
+
+    $scope.removerCarro = function (event, id) {
+
+        $scope.Id = id;
+
+        var confirm = $mdDialog.confirm()
+            .title('Pergunta')
+            .textContent('Deseja remover o carro?')
+            .targetEvent(event)
+            .ok('Sim')
+            .cancel('Não');
+
+        $mdDialog.show(confirm).then(
+
+            function () {
+                $scope.confirmaRemoverCarro();
+            },
+
+            function () {
+                // hide dialog
+            }
+        );
+    },
+
+    $scope.confirmaRemoverCarro = function(){
+
+        carrosFactory.removerCarro($scope.Id).then(function successCallback(response){
+      
+          $scope.showToast(response.data.Mensagem);
+      
+          $scope.listarCarro();
+      
+        }, function errorCallback(response){
+            $scope.showToast(response.data.Mensagem);
+        });
+      
+      },
+
+      $scope.pesquisarCarro = function(){
+
+        carrosFactory.pesquisarCarro($scope.carro_search_keywords).then(function successCallback(response){
+          $scope.paging.total = Math.trunc(response.data.Quantidade / $scope.paging.qtde) + 1;
+          $scope.carros = response.data.Content;
+        }, function errorCallback(response){
+          $scope.showToast(response.data.Mensagem);
+        });
+      }
+
+    function DialogController($scope, $mdDialog) {
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+    }
+});
