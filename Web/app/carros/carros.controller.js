@@ -47,7 +47,7 @@
     },
 
     $scope.showNovoCarroForm = function (event) {
-
+        $scope.clearCarrosForm();
         $mdDialog.show({
             controller: DialogController,
             templateUrl: './app/carros/cadastro_carros.template.html',
@@ -76,6 +76,7 @@
 
         }, function errorCallback(response) {
             $scope.showToast(response.data.Mensagem);
+            $scope.clearCarrosForm();
         });
     },
 

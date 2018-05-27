@@ -83,6 +83,13 @@ namespace BackendCSharpOAuth.Servico
 
         public void Remover(CodigoPadraoDTO dto)
         {
+            var validarImportacoes = _db.Importacao.FirstOrDefault(x => x.Carros.Id == dto.Id);
+
+            if (validarImportacoes != null)
+            {
+                throw new Exception("Nao e possivel remover este carro, pois importacoes dependem deste registro!");
+            }
+
             var registro = RecuperarPorId(dto);
 
             try

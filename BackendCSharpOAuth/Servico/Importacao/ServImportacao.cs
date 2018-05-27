@@ -62,6 +62,7 @@ namespace BackendCSharpOAuth.Servico
 
             try
             {
+                _db.Carros.Attach(registro.Carros);
                 _db.SaveChanges();
             }
             catch (Exception e)

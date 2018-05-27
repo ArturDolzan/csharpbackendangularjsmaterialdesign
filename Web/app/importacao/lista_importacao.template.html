@@ -30,10 +30,10 @@
                     <!-- carro information -->
                     <div class="md-list-item-text">
                         <h3>{{importacao.Id}}</h3>
-                        <h4>{{importacao.DataImportacao}}</h4>
+                        <h4>{{importacao.DataImportacao | date:'dd-MM-yyyy HH:mm'}}</h4>
                         <h4>{{importacao.Descricao}}</h4>
                         <h4>{{importacao.Observacao}}</h4>
-                        <h4>{{importacao.Carros.Descricao}}</h4>
+                        <h3>{{importacao.Carros.Descricao}}</h3>
                     </div>
 
                     <div class="md-secondary-container">
