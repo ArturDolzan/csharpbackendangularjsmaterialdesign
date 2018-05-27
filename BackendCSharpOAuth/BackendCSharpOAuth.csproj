@@ -187,6 +187,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\CarrosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportacaoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,9 +197,14 @@
     <Compile Include="IoC\NinjectDependencyScope.cs" />
     <Compile Include="Models\BancoContext.cs" />
     <Compile Include="Models\Carros.cs" />
+    <Compile Include="Models\Configuracao\CarrosConfig.cs" />
+    <Compile Include="Models\Configuracao\ImportacaoConfig.cs" />
     <Compile Include="Models\DTOs\CodigoPadraoDTO.cs" />
+    <Compile Include="Models\Importacao.cs" />
     <Compile Include="Servico\Carros\IServCarros.cs" />
     <Compile Include="Servico\Carros\ServCarros.cs" />
+    <Compile Include="Servico\Importacao\IServImportacao.cs" />
+    <Compile Include="Servico\Importacao\ServImportacao.cs" />
     <Compile Include="Usuarios\BaseUsuarios.cs" />
     <Compile Include="Usuarios\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

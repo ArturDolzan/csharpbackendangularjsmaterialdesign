@@ -67,6 +67,7 @@ namespace BackendCSharpOAuth.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IServCarros>().To<ServCarros>();
+            kernel.Bind<IServImportacao>().To<ServImportacao>();
         }        
     }
 }
