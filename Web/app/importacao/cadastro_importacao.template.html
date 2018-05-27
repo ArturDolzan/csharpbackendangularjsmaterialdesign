@@ -1,0 +1,48 @@
+﻿<md-dialog>
+    <form name="importacaoForm" novalidate ng-submit="importacaoForm.$valid" ng-cloak>
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Cadastro Importacao</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <div layout-gt-xs="row">
+                    <md-input-container class="md-block">
+                        <label>Código</label>
+                        <input name="Id" id="Id" type="number" ng-model="Id" disabled>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Data analise</label>
+                        <md-datepicker ng-model="DataImportacao" md-placeholder="Digite a data" md-open-on-focus></md-datepicker>
+                    </md-input-container>
+                </div>
+
+                <md-input-container class="md-block" md-is-error="importacaoForm.Descricao.$invalid && (importacaoForm.$submitted)">
+                    <label>Descrição</label>
+                    <input name="Descricao" id="Descricao" type="text" ng-model="Descricao" ng-required="true" md-maxlength="100">
+
+                    <div ng-messages="importacaoForm.Descricao.$error" ng-if="importacaoForm.$submitted">
+                        <div ng-message="required">Preencha este campo!</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Observacao</label>
+                    <textarea ng-model="Observacao" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                </md-input-container>
+
+
+                </div>
+</md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()">Cancelar</md-button>
+            <md-button type="submit" ng-click="importacaoForm.$valid && salvarImportacao()" class="md-primary">Salvar</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

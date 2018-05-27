@@ -79,23 +79,29 @@
         });
     },
 
-    $scope.clearCarrosForm = function () {
+    $scope.clearImportacaoForm = function () {
         $scope.Id = "";
         $scope.Descricao = "";
+        $scope.DataImportacao = "";
+        $scope.Observacao = "";
+       // $scope.Carros.Descricao = "";
     },
 
-    $scope.editarCarro = function (id) {
+    $scope.editarImportacao = function (id) {
 
         // get carro to be edited
-        carrosFactory.editarCarro(id).then(function successCallback(response) {
+        importacaoFactory.editarImportacao(id).then(function successCallback(response) {
 
             // put the values in form
             $scope.Id = response.data.Content.Id;
             $scope.Descricao = response.data.Content.Descricao;
+            $scope.DataImportacao = response.data.Content.DataImportacao;
+            $scope.Observacao = response.data.Content.Observacao;
+           // $scope.Carros.Descricao = response.data.Content.Carros.Descricao;
 
             $mdDialog.show({
                 controller: DialogController,
-                templateUrl: './app/carros/cadastro_carros.template.html',
+                templateUrl: './app/importacao/cadastro_importacao.template.html',
                 parent: angular.element(document.body),
                 clickOutsideToClose: true,
                 scope: $scope,
@@ -106,7 +112,7 @@
 
                 // user clicked 'Cancel'
                 function () {
-                    $scope.clearCarrosForm();
+                    $scope.clearImportacaoForm();
                 }
             );
 

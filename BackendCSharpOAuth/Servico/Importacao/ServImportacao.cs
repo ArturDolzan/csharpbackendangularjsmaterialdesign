@@ -1,5 +1,6 @@
 ﻿using BackendCSharpOAuth.Infra.DTOs;
 using BackendCSharpOAuth.Models;
+using BackendCSharpOAuth.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +69,18 @@ namespace BackendCSharpOAuth.Servico
             catch (Exception e)
             {
                 throw new Exception(e.InnerException.InnerException.Message);
+            }
+
+            return registro;
+        }
+
+        public Importacao RecuperarPorId(CodigoPadraoDTO dto)
+        {
+            var registro = _db.Importacao.Include("Carros").FirstOrDefault(x => x.Id == dto.Id);
+
+            if (registro == null)
+            {
+                throw new Exception("Registro " + dto.Id + " não encontrado! ");
             }
 
             return registro;

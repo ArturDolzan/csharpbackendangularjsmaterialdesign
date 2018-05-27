@@ -1,5 +1,6 @@
 ﻿using BackendCSharpOAuth.Infra.DTOs;
 using BackendCSharpOAuth.Models;
+using BackendCSharpOAuth.Models.DTOs;
 using BackendCSharpOAuth.Servico;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,20 @@ namespace BackendCSharpOAuth.Controllers
                 var retorno = _servImportacao.Salvar(importacao);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Registro salvo com sucesso!" });
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
+            }
+        }
+
+        public HttpResponseMessage RecuperarPorId(CodigoPadraoDTO dto)
+        {
+            try
+            {
+                var retorno = _servImportacao.RecuperarPorId(dto);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Registro recuperado com sucesso!" });
             }
             catch (System.Exception e)
             {

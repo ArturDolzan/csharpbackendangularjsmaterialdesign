@@ -1,5 +1,6 @@
 ﻿using BackendCSharpOAuth.Infra.DTOs;
 using BackendCSharpOAuth.Models;
+using BackendCSharpOAuth.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace BackendCSharpOAuth.Servico
         TotalPaginacaoDTO RecuperarTotalRegistros();
         List<Importacao> Listar(QueryPaginacaoDTO dto);
         Importacao Salvar(Importacao importacao);
+        Importacao RecuperarPorId(CodigoPadraoDTO dto);
     }
 }

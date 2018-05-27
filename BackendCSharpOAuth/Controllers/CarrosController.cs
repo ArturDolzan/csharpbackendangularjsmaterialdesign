@@ -75,7 +75,7 @@ namespace BackendCSharpOAuth.Controllers
             {
                 var retorno = _servCarros.RecuperarPorId(dto);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Registro salvo com sucesso!" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Registro recuperado com sucesso!" });
             }
             catch (System.Exception e)
             {

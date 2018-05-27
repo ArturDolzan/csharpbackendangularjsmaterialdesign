@@ -27,13 +27,13 @@
         });
     };
 
-    factory.editarCarro = function(id){
+    factory.editarImportacao = function(id){
         return $http({
             method: 'POST',
             data: {
                 'Id': id
             },
-            url: 'http://localhost:55090/api/Carros/RecuperarPorId'
+            url: 'http://localhost:55090/api/Importacao/RecuperarPorId'
         });
     };
 
