@@ -1,0 +1,58 @@
+﻿<div layout="row" ng-controller="importacaoController" ng-cloak>
+    
+    <div flex="10"></div>
+
+    <div flex="80" class='m-20px-0'>
+
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <!-- page title -->
+                <div flex md-truncate>
+                    <h3 class="md-headline">Importacoes</h3>
+                </div>
+
+                <md-button class="md-raised" ng-click="showNovaImportacaoForm()">Novo</md-button>
+            </div>
+        </md-toolbar>
+
+        <md-input-container class="md-block m-b-0px">
+            <form ng-submit="pesquisarImportacao()">
+                <label>Buscar importacao...</label>
+                <input ng-model="importacao_search_keywords">
+            </form>
+        </md-input-container>
+
+        <md-content flex>
+    
+            <md-list >
+                <md-list-item class="md-3-line" ng-repeat="importacao in importacoes">
+
+                    <!-- carro information -->
+                    <div class="md-list-item-text">
+                        <h3>{{importacao.Id}}</h3>
+                        <h4>{{importacao.DataImportacao}}</h4>
+                        <h4>{{importacao.Descricao}}</h4>
+                        <h4>{{importacao.Observacao}}</h4>
+                        <h4>{{importacao.Carros.Descricao}}</h4>
+                    </div>
+
+                    <div class="md-secondary-container">
+                        <md-button class="md-fab md-mini md-primary" ng-click="editarImportacao(importacao.Id)" aria-label="Editar">
+                            <md-icon md-svg-src="app/assets/img/edit.svg"></md-icon>
+                        </md-button>
+                        <md-button class="md-fab md-mini" ng-click="removerImportacao($event, importacao.Id)" aria-label="Remover">
+                            <md-icon md-svg-src="app/assets/img/trash.svg"></md-icon>
+                        </md-button>
+ 
+                    </div>
+                    <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+               
+         <cl-paging flex cl-pages="paging.total", cl-steps="6", cl-page-changed="paging.onPageChanged()", cl-align="center center", cl-current-page="paging.current"></cl-paging>
+
+    </div>
+
+    <div flex="10"></div>
+</div> <!-- end row -->

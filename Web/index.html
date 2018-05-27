@@ -30,7 +30,7 @@
 
     <script src="Scripts/angular-material.js"></script>
     <script src="Scripts/dist.min.js"></script>
-    
+
     <script type="text/javascript">
         angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
     </script>
@@ -44,6 +44,7 @@
                 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
                     <md-nav-item md-nav-href="dashboard" name="dashboard">Principal</md-nav-item>
                     <md-nav-item md-nav-href="carros" name="carros">Carros</md-nav-item>
+                    <md-nav-item md-nav-href="importacao" name="importacao">Importacoes</md-nav-item>
                 </md-nav-bar>
                 <div ng-view></div>
             </md-content>
@@ -52,6 +53,9 @@
 
     <script src="app/carros/carros.controller.js"></script>
     <script src="app/carros/carros.factory.js"></script>
+
+    <script src="app/importacao/importacao.controller.js"></script>
+    <script src="app/importacao/importacao.factory.js"></script>
 
 </body>
 

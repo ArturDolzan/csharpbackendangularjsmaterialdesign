@@ -15,5 +15,8 @@ MyApp.config(function ($routeProvider, $locationProvider) {
     }).when('/carros', {
             templateUrl: '/app/carros/lista_carros.template.html',
             controller: 'AppCtrl'
+    }).when('/importacao', {
+            templateUrl: '/app/importacao/lista_importacao.template.html',
+            controller: 'AppCtrl'
     });
 });
