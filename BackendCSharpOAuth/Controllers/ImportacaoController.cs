@@ -21,6 +21,20 @@ namespace BackendCSharpOAuth.Controllers
             _servImportacao = servImportacao;
         }
 
+        public HttpResponseMessage ListarCarros()
+        {
+            try
+            {
+                var carros = _servImportacao.ListarCarros();
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = carros, Mensagem = "Registros recuperados com sucesso!" });
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
+            }
+        }
+
         public HttpResponseMessage Listar(QueryPaginacaoDTO dto)
         {
             try

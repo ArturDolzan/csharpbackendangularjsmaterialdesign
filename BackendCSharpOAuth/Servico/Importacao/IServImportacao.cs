@@ -15,5 +15,6 @@ namespace BackendCSharpOAuth.Servico
         List<Importacao> Listar(QueryPaginacaoDTO dto);
         Importacao Salvar(Importacao importacao);
         Importacao RecuperarPorId(CodigoPadraoDTO dto);
+        List<Carros> ListarCarros();
     }
 }

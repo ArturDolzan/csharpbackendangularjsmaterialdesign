@@ -2,6 +2,14 @@
 
     var factory = {};
 
+    factory.listarCarros = function () {
+        
+        return $http({
+            method: 'POST',
+            url: 'http://localhost:55090/api/Importacao/ListarCarros'
+        });
+    };
+
     factory.listarImportacao = function (paginacao) {
         
         return $http({

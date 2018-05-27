@@ -35,6 +35,11 @@ namespace BackendCSharpOAuth.Servico
             return _db.Carros.OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit).ToList();
         }
 
+        public List<Carros> ListarSearchField()
+        {
+            return _db.Carros.OrderBy(x => x.Descricao).Where(x => x.Ativo).ToList();
+        }
+
         public Carros Salvar(Carros carros)
         {
             var registro = _db.Carros.FirstOrDefault(x => x.Id == carros.Id);

@@ -109,3 +109,7 @@
     font-size: 14px;
     opacity: 0.54;
 }
+
+.md-datepicker-input-mask {
+    overflow: hidden;
+}

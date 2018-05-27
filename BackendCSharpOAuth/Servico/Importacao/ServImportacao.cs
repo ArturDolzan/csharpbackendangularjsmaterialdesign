@@ -11,10 +11,17 @@ namespace BackendCSharpOAuth.Servico
     public class ServImportacao: IServImportacao
     {
         private readonly BancoContext _db;
+        private readonly IServCarros _servCarros;
 
-        public ServImportacao()
+        public ServImportacao(IServCarros servCarros)
         {
             _db = new BancoContext();
+            _servCarros = servCarros;
+        }
+
+        public List<Carros> ListarCarros()
+        {
+            return _servCarros.ListarSearchField();
         }
 
         public List<Importacao> PesquisarImportacao(PesquisaDTO dto)

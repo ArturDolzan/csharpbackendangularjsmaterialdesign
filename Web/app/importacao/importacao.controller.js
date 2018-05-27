@@ -1,5 +1,18 @@
 ﻿MyApp.controller('importacaoController', function ($scope, $mdDialog, $mdToast, importacaoFactory) {
 
+    $scope.carro = null;
+    $scope.carros = [];
+    $scope.show_filters = false;
+
+    $scope.loadCarros = function() {
+  
+        importacaoFactory.listarCarros().then(function successCallback(response) {
+            $scope.carros = response.data.Content;
+        }, function errorCallback(response) {
+            $scope.showToast(response.data.Message);
+        });
+    };
+
     $scope.currentPage = 0;
 
     $scope.paging = {
@@ -24,7 +37,7 @@
         $mdToast.show(
             $mdToast.simple()
                 .textContent(message)
-                .hideDelay(3000)
+                .hideDelay(2000)
                 .position("top left")
         );
     },
@@ -47,6 +60,7 @@
     },
 
     $scope.showNovaImportacaoForm = function (event) {
+        $scope.show_filters = true;
 
         $mdDialog.show({
             controller: DialogController,
@@ -56,6 +70,8 @@
             scope: $scope,
             preserveScope: true,
             fullscreen: true
+        }).finally(function() {
+            $scope.show_filters = false;
         });
     },
 
@@ -84,20 +100,25 @@
         $scope.Descricao = "";
         $scope.DataImportacao = "";
         $scope.Observacao = "";
+
+        $scope.carros = [];
+       // $scope.carro = "";
        // $scope.Carros.Descricao = "";
     },
 
     $scope.editarImportacao = function (id) {
 
-        // get carro to be edited
         importacaoFactory.editarImportacao(id).then(function successCallback(response) {
+            $scope.show_filters = true;
 
             // put the values in form
             $scope.Id = response.data.Content.Id;
             $scope.Descricao = response.data.Content.Descricao;
             $scope.DataImportacao = response.data.Content.DataImportacao;
             $scope.Observacao = response.data.Content.Observacao;
-           // $scope.Carros.Descricao = response.data.Content.Carros.Descricao;
+            
+            $scope.carros.push(response.data.Content.Carros);
+            $scope.carro = response.data.Content.Carros;
 
             $mdDialog.show({
                 controller: DialogController,
@@ -107,6 +128,8 @@
                 scope: $scope,
                 preserveScope: true,
                 fullscreen: true
+            }).finally(function() {
+                $scope.show_filters = false;
             }).then(
                 function () { },
 
