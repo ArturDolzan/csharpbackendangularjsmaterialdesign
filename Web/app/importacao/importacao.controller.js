@@ -3,15 +3,7 @@
     $scope.carro = null;
     $scope.carros = [];
     $scope.show_filters = false;
-
-    $scope.loadCarros = function() {
-  
-        importacaoFactory.listarCarros().then(function successCallback(response) {
-            $scope.carros = response.data.Content;
-        }, function errorCallback(response) {
-            $scope.showToast(response.data.Message);
-        });
-    };
+    $scope.arquivo = null;
 
     $scope.currentPage = 0;
 
@@ -25,13 +17,26 @@
     function loadPages() {
         
         $scope.currentPage = $scope.paging.current;
-        if(!$scope.carro_search_keywords){
+        if(!$scope.importacao_search_keywords){
             $scope.listarImportacao();
         }else{
             $scope.pesquisarImportacao();
         }
         
     };
+
+    $scope.loadCarros = function() {
+  
+        importacaoFactory.listarCarros().then(function successCallback(response) {
+            $scope.carros = response.data.Content;
+        }, function errorCallback(response) {
+            $scope.showToast(response.data.Message);
+        });
+    },
+
+    $scope.isNovoCadastro = function(){
+        return $scope.Id ? true: false;
+    },
 
     $scope.showToast = function (message) {
         $mdToast.show(
@@ -77,18 +82,25 @@
 
     $scope.salvarImportacao = function () {
 
-        carrosFactory.salvarCarro($scope).then(function successCallback(response) {
+        if(!$scope.Id){
+            if(!$scope.arquivo){
+                $scope.showToast("Selecione o arquivo para salvar...");
+                return;
+            }
+        }
+
+        importacaoFactory.salvarImportacao($scope).then(function successCallback(response) {
           
             $scope.showToast(response.data.Mensagem);
 
             // refresh the list
-            $scope.listarCarro();
+            $scope.listarImportacao();
 
             // close dialog
             $scope.cancel();
 
             // remove form values
-            $scope.clearCarrosForm();
+            $scope.clearImportacaoForm();
 
         }, function errorCallback(response) {
             $scope.showToast(response.data.Mensagem);
@@ -102,8 +114,6 @@
         $scope.Observacao = "";
 
         $scope.carros = [];
-       // $scope.carro = "";
-       // $scope.Carros.Descricao = "";
     },
 
     $scope.editarImportacao = function (id) {
@@ -184,23 +194,23 @@
 
       $scope.pesquisarCarro = function(){
     
-        if(!$scope.carro_search_keywords){
-            $scope.listarCarro();
-            return;
-        }
+            if(!$scope.carro_search_keywords){
+                $scope.listarCarro();
+                return;
+            }
 
-        var paginacao = {
-            page: $scope.paging.current,
-            start: $scope.paging.current * $scope.paging.qtde,
-            limit: $scope.paging.qtde
-        };
+            var paginacao = {
+                page: $scope.paging.current,
+                start: $scope.paging.current * $scope.paging.qtde,
+                limit: $scope.paging.qtde
+            };
 
-        carrosFactory.pesquisarCarro(paginacao, $scope.carro_search_keywords).then(function successCallback(response){
-          $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
-          $scope.carros = response.data.Content;
-        }, function errorCallback(response){
-          $scope.showToast(response.data.Mensagem);
-        });
+            carrosFactory.pesquisarCarro(paginacao, $scope.carro_search_keywords).then(function successCallback(response){
+            $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
+            $scope.carros = response.data.Content;
+            }, function errorCallback(response){
+            $scope.showToast(response.data.Mensagem);
+            });
       }
 
     function DialogController($scope, $mdDialog) {
@@ -208,4 +218,29 @@
             $mdDialog.cancel();
         };
     }
+    
 });
+
+MyApp.directive('chooseFile', function() {
+    return {
+      link: function (scope, elem, attrs) {
+        var button = elem.find('button');
+        var input = angular.element(elem[0].querySelector('input#fileInput'));
+        button.bind('click', function() {
+          input[0].click();
+        });
+        input.bind('change', function(e) {
+          scope.$apply(function() {
+            var files = e.target.files;
+            if (files[0]) {
+              scope.arquivo = files[0];
+              scope.fileName = files[0].name;
+            } else {
+              scope.arquivo = null;
+              scope.fileName = null;
+            }
+          });
+        });
+      }
+    };
+  });

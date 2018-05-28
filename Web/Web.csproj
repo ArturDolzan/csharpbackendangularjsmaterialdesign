@@ -922,6 +922,7 @@
     <Content Include="app\assets\img\edit.svg" />
     <Content Include="app\assets\img\trash.svg" />
     <Content Include="Scripts\angular-moment.min.js.map" />
+    <Content Include="app\assets\img\clip.svg" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

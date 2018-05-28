@@ -23,15 +23,18 @@
         });
     };
 
-    factory.salvarCarro = function ($scope) {
+    factory.salvarImportacao = function ($scope) {
+        debugger;
         return $http({
             method: 'POST',
             data: {
                 'Descricao': $scope.Descricao,
-                'Ativo': true,
-                'Id': $scope.Id
+                'DataImportacao': $scope.DataImportacao,
+                'Id': $scope.Id,
+                'Observacao': $scope.Observacao,
+                'Carros': $scope.carro
             },
-            url: 'http://localhost:55090/api/Carros/Salvar'
+            url: 'http://localhost:55090/api/Importacao/Salvar'
         });
     };
 

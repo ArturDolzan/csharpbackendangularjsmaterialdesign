@@ -20,7 +20,7 @@
                     <div flex-gt-xs>
                         <md-input-container>
                             <label>Data analise</label>
-                            <md-datepicker ng-model="DataImportacao" md-placeholder="Digite a data"></md-datepicker>
+                            <md-datepicker ng-model="DataImportacao" md-placeholder="Digite a data" md-open-on-focus></md-datepicker>
                         </md-input-container>
                     </div>
 
@@ -37,21 +37,31 @@
 
                 <md-input-container class="md-block">
                     <label>Observacao</label>
-                    <textarea ng-model="Observacao" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                    <textarea ng-model="Observacao" md-maxlength="150" rows="1" md-select-on-focus></textarea>
                 </md-input-container>
 
-                <!--<div ng-repeat="control in controls">-->
-                    <div class="form-group" ng-if="show_filters" layout="row" flex>
-                        <md-input-container class="md-block">
-                            <md-select placeholder="Selecione o carro" ng-model="carro" ng-model-options="{trackBy: '$value.Id' }" md-on-open="loadCarros()" style="min-width: 600px;">
-                                <md-option ng-value="carro" ng-repeat="carro in carros">{{carro.Descricao}}</md-option>
-                            </md-select>
-                        </md-input-container>
+                <div class="form-group" layout="row" flex>
+                    <md-input-container class="md-block" >
+                        <md-select placeholder="Selecione o carro" ng-model="carro" required name="carros" ng-model-options="{trackBy: '$value.Id' }" md-on-open="loadCarros()" style="min-width: 600px;">
+                            <md-option ng-value="carro" ng-repeat="carro in carros">{{carro.Descricao}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
 
+                <choose-file layout="row">
+                    <input id="fileInput" type="file" ng-disabled="isNovoCadastro()" class="ng-hide">
+                    <md-input-container flex class="md-block">
+                        <input type="text" ng-model="fileName" disabled>
+                        <div class="hint">Selecione o arquivo para importar</div>
+                    </md-input-container>
+                    <div>
+                        <md-button id="uploadButton" class="md-fab md-mini">
+                            <md-icon md-svg-src="app/assets/img/clip.svg"></md-icon>
+                        </md-button>
                     </div>
-                <!--</div>-->
+                </choose-file>
 
-             </div>
+            </div>
 
         </md-dialog-content>
 
