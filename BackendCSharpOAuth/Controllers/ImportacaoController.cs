@@ -4,6 +4,8 @@ using BackendCSharpOAuth.Models.DTOs;
 using BackendCSharpOAuth.Servico;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -51,11 +53,62 @@ namespace BackendCSharpOAuth.Controllers
             }
         }
 
+        public HttpResponseMessage SalvarImportacao()
+        {
+            try
+            {
+                // var retorno = _servImportacao.Salvar(importacao);
+
+                var arquivo = HttpContext.Current.Request.Files[0];
+                string fileSavePath = null;
+
+                if (arquivo != null)
+                {
+                    var di = new DirectoryInfo(HttpContext.Current.Server.MapPath("~/UploadedFiles"));
+
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+
+                    fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/UploadedFiles"), arquivo.FileName);
+
+                    if (!Directory.Exists(HttpContext.Current.Server.MapPath("~/UploadedFiles")))
+                    {
+                        Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~/UploadedFiles"));
+                    }
+
+                    arquivo.SaveAs(fileSavePath);
+                }
+
+                var importacao = new Importacao
+                {
+                    Carros = new Carros { Id = Convert.ToInt32(HttpContext.Current.Request.Form[4]) },
+                    DataImportacao = Convert.ToDateTime(HttpContext.Current.Request.Form[1]).Date,
+                    Descricao = Convert.ToString(HttpContext.Current.Request.Form[0]),
+                    Id = Convert.ToInt32(HttpContext.Current.Request.Form[2]),
+                    Observacao = Convert.ToString(HttpContext.Current.Request.Form[3])
+                };
+
+                var retorno = _servImportacao.Salvar(importacao, fileSavePath);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Registro salvo com sucesso!" });
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
+            }
+        }
+
         public HttpResponseMessage Salvar(Importacao importacao)
         {
             try
             { 
-                var retorno = _servImportacao.Salvar(importacao);
+                var retorno = _servImportacao.Salvar(importacao, null);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Registro salvo com sucesso!" });
             }

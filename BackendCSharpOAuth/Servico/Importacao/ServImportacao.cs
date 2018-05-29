@@ -3,6 +3,7 @@ using BackendCSharpOAuth.Models;
 using BackendCSharpOAuth.Models.DTOs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -42,12 +43,25 @@ namespace BackendCSharpOAuth.Servico
             return _db.Importacao.Include("Carros").OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit).ToList();
         }
 
-        public Importacao Salvar(Importacao importacao)
+        
+
+        public Importacao Salvar(Importacao importacao, string caminhoArquivo)
         {
             var registro = _db.Importacao.FirstOrDefault(x => x.Id == importacao.Id);
 
             if (registro == null)
             {
+                if (caminhoArquivo != null)
+                {
+                    using (var stream = new FileStream(caminhoArquivo, FileMode.Open, FileAccess.Read))
+                    {
+                        using (var reader = new BinaryReader(stream))
+                        {
+                            importacao.Arquivo = reader.ReadBytes((int)stream.Length);
+                        }
+                    }
+                }
+
                 try
                 {
                     _db.Importacao.Add(importacao);

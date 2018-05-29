@@ -66,6 +66,7 @@
 
     $scope.showNovaImportacaoForm = function (event) {
         $scope.show_filters = true;
+        $scope.DataImportacao = new Date();
 
         $mdDialog.show({
             controller: DialogController,
@@ -89,7 +90,9 @@
             }
         }
 
-        importacaoFactory.salvarImportacao($scope).then(function successCallback(response) {
+        importacaoFactory.SalvarImportacaoFile($scope);
+
+       /* importacaoFactory.salvarImportacao($scope).then(function successCallback(response) {
           
             $scope.showToast(response.data.Mensagem);
 
@@ -104,7 +107,7 @@
 
         }, function errorCallback(response) {
             $scope.showToast(response.data.Mensagem);
-        });
+        });*/
     },
 
     $scope.clearImportacaoForm = function () {
