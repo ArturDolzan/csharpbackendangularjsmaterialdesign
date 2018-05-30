@@ -55,8 +55,10 @@
         xhr.onload=function(){
             if (xhr.status===200||xhr.status===202) {
                 debugger;
+                return true;
             }else{
-             
+                debugger;
+                return false;
             }
         
         };

@@ -13,6 +13,7 @@ namespace BackendCSharpOAuth.Models
 
         public DbSet<Carros> Carros { get; set; }
         public DbSet<Importacao> Importacao { get; set; }
+        public DbSet<ImportacaoColunas> ImportacaoColunas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -21,6 +22,7 @@ namespace BackendCSharpOAuth.Models
 
             modelBuilder.Configurations.Add(new CarrosConfig());
             modelBuilder.Configurations.Add(new ImportacaoConfig());
+            modelBuilder.Configurations.Add(new ImportacaoColunasConfig());
 
             base.OnModelCreating(modelBuilder);
            

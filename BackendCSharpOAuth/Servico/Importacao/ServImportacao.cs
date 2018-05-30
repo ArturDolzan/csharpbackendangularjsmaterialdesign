@@ -5,7 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
+using PostgreSQLCopyHelper;
+using Npgsql;
+using Npgsql.Bulk;
 
 namespace BackendCSharpOAuth.Servico
 {
@@ -73,6 +77,17 @@ namespace BackendCSharpOAuth.Servico
                     throw new Exception(e.InnerException.InnerException.Message);
                 }
 
+                try
+                {
+                    ImportarDados(caminhoArquivo, importacao.Id);
+                }
+                catch (Exception e)
+                {                    
+                    throw new Exception("Erro ao importar arquivo. Erro: " + e.Message);
+                }
+
+                importacao.ImportacaoColunas = null;
+
                 return importacao;
             }
 
@@ -94,6 +109,94 @@ namespace BackendCSharpOAuth.Servico
 
             return registro;
         }
+
+        public void ImportarDados(string arquivo, int codigoImportacao)
+        {
+            //-- Primeira linha, logo deve verificar as colunas...
+            var colunas = File.ReadAllLines(arquivo).Select(x => x.Split(';')).FirstOrDefault();
+
+            var valor = File.ReadAllLines(arquivo).Select(x => x.Split(';')).ToList();
+            var listImportacaoColunas = new List<ImportacaoColunas>();
+
+           
+            foreach (var itemValor in valor.ToList().Skip(1))
+            {
+                var dado = itemValor;
+
+                string data = dado[0];
+                int controle = 1;
+                foreach (var valores in dado.Skip(1).ToList())
+                {
+                    var coluna = colunas[controle];
+                    var dataV = data.Substring(0, data.IndexOf(","));
+
+                    DateTime d = new DateTime();
+                    Decimal v = 0M;
+
+                    try
+                    {
+                        d = Convert.ToDateTime(dataV);
+                        v = Convert.ToDecimal(valores);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+
+                    var importacaoColunas = new ImportacaoColunas
+                    {
+                        EhCabecalho = 0,
+                        CodigoImportacao = codigoImportacao,
+                        DataLeitura = d,
+                        NomeColuna = coluna,
+                        ValorLeitura = v
+                    };
+
+                    listImportacaoColunas.Add(importacaoColunas);
+
+                    controle = controle + 1;
+                }
+            }
+
+
+            //   var rem = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == codigoImportacao);
+            // foreach (var item in rem)
+            // {
+            //      _db.ImportacaoColunas.Remove(item);
+            //_db.SaveChanges();
+            //  }
+
+            // foreach (var item in listImportacaoColunas)
+            // {
+            //    _db.ImportacaoColunas.Add(item);
+            // _db.SaveChanges();
+            //  }
+
+            //try
+            //{
+            //    _db.ImportacaoColunas.AddRange(listImportacaoColunas);
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new Exception(e.Message);
+            //}
+
+
+
+            //var copyHelper = new PostgreSQLCopyHelper<ImportacaoColunas>("ImportacaoColunas")
+            // .MapInteger("Id", x => x.Id)
+            // .MapInteger("col_integer", x => x.CodigoImportacao)
+            // .MapDate("col_money", x => x.DataLeitura)
+            // .MapInteger("col_bigint", x => x.EhCabecalho)
+            // .MapVarchar("col_timestamp", x => x.NomeColuna)
+            // .MapMoney("col_real", x => x.ValorLeitura);
+
+
+           
+        }
+
+
+
 
         public Importacao RecuperarPorId(CodigoPadraoDTO dto)
         {

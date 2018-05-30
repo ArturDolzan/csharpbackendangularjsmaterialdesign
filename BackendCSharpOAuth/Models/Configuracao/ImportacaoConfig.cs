@@ -43,6 +43,10 @@ namespace BackendCSharpOAuth.Models.Configuracao
             //    .IsRequired();
 
             this.HasRequired(x => x.Carros);
+
+            this.HasMany(x => x.ImportacaoColunas)
+                .WithOptional()
+                .HasForeignKey(x => x.CodigoImportacao);
           
         }
     }

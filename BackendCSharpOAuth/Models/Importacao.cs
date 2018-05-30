@@ -16,5 +16,7 @@ namespace BackendCSharpOAuth.Models
         public byte[] Arquivo { get; set; }
      
         public Carros Carros { get; set; }
+
+        public List<ImportacaoColunas> ImportacaoColunas { get; set; }
     }
 }

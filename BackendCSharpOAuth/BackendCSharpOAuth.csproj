@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Architecture.Foundation.Transaction, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AF.Transaction.1.0.6\lib\Architecture.Foundation.Transaction.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +55,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework6.Npgsql, Version=3.1.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework6.Npgsql.3.1.1\lib\net45\EntityFramework6.Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -76,6 +82,21 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -104,12 +125,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Npgsql.2.2.7\lib\net45\Npgsql.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql.Bulk, Version=0.5.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.Bulk.0.5.12\lib\net45\Npgsql.Bulk.dll</HintPath>
+    </Reference>
     <Reference Include="Npgsql.EntityFramework">
       <HintPath>..\packages\Npgsql.EntityFramework.2.2.7\lib\net45\Npgsql.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="PostgreSQLCopyHelper, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostgreSQLCopyHelper.1.3.0\lib\net45\PostgreSQLCopyHelper.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -177,8 +204,56 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\readme.txt" />
+    <Content Include="BulkCopyConfig.xml" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
+    <Content Include="libpqDLL\8.x\x64\comerr32.dll" />
+    <Content Include="libpqDLL\8.x\x64\gssapi32.dll" />
+    <Content Include="libpqDLL\8.x\x64\iconv.dll" />
+    <Content Include="libpqDLL\8.x\x64\k5sprt32.dll" />
+    <Content Include="libpqDLL\8.x\x64\krb5_32.dll" />
+    <Content Include="libpqDLL\8.x\x64\libeay32.dll" />
+    <Content Include="libpqDLL\8.x\x64\libiconv-2.dll" />
+    <Content Include="libpqDLL\8.x\x64\libintl-8.dll" />
+    <Content Include="libpqDLL\8.x\x64\libpq.dll" />
+    <Content Include="libpqDLL\8.x\x64\libxml2.dll" />
+    <Content Include="libpqDLL\8.x\x64\libxslt.dll" />
+    <Content Include="libpqDLL\8.x\x64\msvcr71.dll" />
+    <Content Include="libpqDLL\8.x\x64\ssleay32.dll" />
+    <Content Include="libpqDLL\8.x\x64\zlib1.dll" />
+    <Content Include="libpqDLL\8.x\x86\comerr32.dll" />
+    <Content Include="libpqDLL\8.x\x86\gssapi32.dll" />
+    <Content Include="libpqDLL\8.x\x86\iconv.dll" />
+    <Content Include="libpqDLL\8.x\x86\k5sprt32.dll" />
+    <Content Include="libpqDLL\8.x\x86\krb5_32.dll" />
+    <Content Include="libpqDLL\8.x\x86\libeay32.dll" />
+    <Content Include="libpqDLL\8.x\x86\libiconv-2.dll" />
+    <Content Include="libpqDLL\8.x\x86\libintl-8.dll" />
+    <Content Include="libpqDLL\8.x\x86\libpq.dll" />
+    <Content Include="libpqDLL\8.x\x86\libxml2.dll" />
+    <Content Include="libpqDLL\8.x\x86\libxslt.dll" />
+    <Content Include="libpqDLL\8.x\x86\msvcr71.dll" />
+    <Content Include="libpqDLL\8.x\x86\PgCPP.DLL.8.x.dll" />
+    <Content Include="libpqDLL\8.x\x86\ssleay32.dll" />
+    <Content Include="libpqDLL\8.x\x86\zlib1.dll" />
+    <Content Include="libpqDLL\9.x\x64\iconv.dll" />
+    <Content Include="libpqDLL\9.x\x64\libeay32.dll" />
+    <Content Include="libpqDLL\9.x\x64\libintl-8.dll" />
+    <Content Include="libpqDLL\9.x\x64\libpq.dll" />
+    <Content Include="libpqDLL\9.x\x64\libxml2.dll" />
+    <Content Include="libpqDLL\9.x\x64\libxslt.dll" />
+    <Content Include="libpqDLL\9.x\x64\ssleay32.dll" />
+    <Content Include="libpqDLL\9.x\x64\zlib1.dll" />
+    <Content Include="libpqDLL\9.x\x86\libeay32.dll" />
+    <Content Include="libpqDLL\9.x\x86\libiconv.dll" />
+    <Content Include="libpqDLL\9.x\x86\libintl.dll" />
+    <Content Include="libpqDLL\9.x\x86\libpq.dll" />
+    <Content Include="libpqDLL\9.x\x86\libxml2.dll" />
+    <Content Include="libpqDLL\9.x\x86\libxslt.dll" />
+    <Content Include="libpqDLL\9.x\x86\PgCPP.DLL.9.x.dll" />
+    <Content Include="libpqDLL\9.x\x86\ssleay32.dll" />
+    <Content Include="libpqDLL\9.x\x86\zlib1.dll" />
+    <Content Include="Readme!!!.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -198,9 +273,11 @@
     <Compile Include="Models\BancoContext.cs" />
     <Compile Include="Models\Carros.cs" />
     <Compile Include="Models\Configuracao\CarrosConfig.cs" />
+    <Compile Include="Models\Configuracao\ImportacaoColunasConfig.cs" />
     <Compile Include="Models\Configuracao\ImportacaoConfig.cs" />
     <Compile Include="Models\DTOs\CodigoPadraoDTO.cs" />
     <Compile Include="Models\Importacao.cs" />
+    <Compile Include="Models\ImportacaoColunas.cs" />
     <Compile Include="Servico\Carros\IServCarros.cs" />
     <Compile Include="Servico\Carros\ServCarros.cs" />
     <Compile Include="Servico\Importacao\IServImportacao.cs" />

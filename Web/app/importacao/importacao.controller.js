@@ -88,26 +88,70 @@
                 $scope.showToast("Selecione o arquivo para salvar...");
                 return;
             }
+            debugger;
+
+            xhr = new XMLHttpRequest();
+            formData = new FormData();
+
+            var day = $scope.DataImportacao.getDate();
+            var month=$scope.DataImportacao.getMonth();
+            month=month+1;
+            if((String(day)).length==1)
+            day='0'+day;
+
+            if((String(month)).length==1)
+            month='0'+month;
+
+            var dateT = day+ '/' + month + '/' + $scope.DataImportacao.getFullYear();
+
+            formData.append('Files', $scope.arquivo, $scope.arquivo.name);
+            formData.append('Descricao', $scope.Descricao);
+            formData.append('DataImportacao', dateT);
+            formData.append('Id', 0);
+            formData.append('Observacao', $scope.Observacao);
+            formData.append('Carros', $scope.carro.Id);
+
+            xhr.open('POST', 'http://localhost:55090/api/Importacao/SalvarImportacao', true);
+
+            xhr.onerror=function(){
+                alert('Erro ao processar requisição!');
+            };
+
+            xhr.onload=function(){
+                debugger;
+                if (xhr.status===200||xhr.status===202) {
+        
+                 
+                }else{
+                  
+                }
+
+            };
+
+            xhr.send(formData);
+
+        }else{
+            importacaoFactory.salvarImportacao($scope).then(function successCallback(response) {
+          
+                $scope.showToast(response.data.Mensagem);
+    
+                // refresh the list
+                $scope.listarImportacao();
+    
+                // close dialog
+                $scope.cancel();
+    
+                // remove form values
+                $scope.clearImportacaoForm();
+    
+            }, function errorCallback(response) {
+                $scope.showToast(response.data.Mensagem);
+            });
         }
 
-        importacaoFactory.SalvarImportacaoFile($scope);
+        
 
-       /* importacaoFactory.salvarImportacao($scope).then(function successCallback(response) {
-          
-            $scope.showToast(response.data.Mensagem);
-
-            // refresh the list
-            $scope.listarImportacao();
-
-            // close dialog
-            $scope.cancel();
-
-            // remove form values
-            $scope.clearImportacaoForm();
-
-        }, function errorCallback(response) {
-            $scope.showToast(response.data.Mensagem);
-        });*/
+        
     },
 
     $scope.clearImportacaoForm = function () {
