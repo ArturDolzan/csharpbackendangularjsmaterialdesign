@@ -145,7 +145,6 @@ namespace BackendCSharpOAuth.Servico
 
                     var importacaoColunas = new ImportacaoColunas
                     {
-                        EhCabecalho = 0,
                         CodigoImportacao = codigoImportacao,
                         DataLeitura = d,
                         NomeColuna = coluna,
@@ -159,39 +158,18 @@ namespace BackendCSharpOAuth.Servico
             }
 
 
-            //   var rem = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == codigoImportacao);
-            // foreach (var item in rem)
-            // {
-            //      _db.ImportacaoColunas.Remove(item);
-            //_db.SaveChanges();
-            //  }
+            _db.Database.BeginTransaction();
 
-            // foreach (var item in listImportacaoColunas)
-            // {
-            //    _db.ImportacaoColunas.Add(item);
-            // _db.SaveChanges();
-            //  }
+            foreach (var item in listImportacaoColunas)
+            {
+                
+                var sql = "insert into \"ImportacaoColunas\" (\"NomeColuna\", \"DataLeitura\", \"ValorLeitura\", \"CodigoImportacao\")";
+                sql = sql + " values ('" + item.NomeColuna + "', '" + item.DataLeitura + "', " + item.ValorLeitura.ToString().Replace(",", ".") + ", " + item.CodigoImportacao + ") ";
 
-            //try
-            //{
-            //    _db.ImportacaoColunas.AddRange(listImportacaoColunas);
-            //}
-            //catch (Exception e)
-            //{
-            //    throw new Exception(e.Message);
-            //}
+                _db.Database.ExecuteSqlCommand(sql);
+            }
 
-
-
-            //var copyHelper = new PostgreSQLCopyHelper<ImportacaoColunas>("ImportacaoColunas")
-            // .MapInteger("Id", x => x.Id)
-            // .MapInteger("col_integer", x => x.CodigoImportacao)
-            // .MapDate("col_money", x => x.DataLeitura)
-            // .MapInteger("col_bigint", x => x.EhCabecalho)
-            // .MapVarchar("col_timestamp", x => x.NomeColuna)
-            // .MapMoney("col_real", x => x.ValorLeitura);
-
-
+            _db.Database.CurrentTransaction.Commit();
            
         }
 

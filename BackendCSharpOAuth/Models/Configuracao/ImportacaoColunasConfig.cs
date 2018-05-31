@@ -30,19 +30,14 @@ namespace BackendCSharpOAuth.Models.Configuracao
                 .HasColumnOrder(2)
                 .IsRequired();
 
-            this.Property(x => x.EhCabecalho)
-                .HasColumnName("EhCabecalho")
-                .HasColumnOrder(3)
-                .IsRequired();
-
             this.Property(x => x.ValorLeitura)
                 .HasColumnName("ValorLeitura")
-                .HasColumnOrder(4)
+                .HasColumnOrder(3)
                 .IsRequired();
 
             this.Property(x => x.CodigoImportacao)
                 .HasColumnName("CodigoImportacao")
-                .HasColumnOrder(5);
+                .HasColumnOrder(4);
 
             HasRequired(x => x.Importacao)
                 .WithMany()
