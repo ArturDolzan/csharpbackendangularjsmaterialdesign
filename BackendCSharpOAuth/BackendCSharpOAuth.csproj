@@ -254,6 +254,8 @@
     <Content Include="libpqDLL\9.x\x86\ssleay32.dll" />
     <Content Include="libpqDLL\9.x\x86\zlib1.dll" />
     <Content Include="Readme!!!.txt" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -280,6 +282,8 @@
     <Compile Include="Models\ImportacaoColunas.cs" />
     <Compile Include="Servico\Carros\IServCarros.cs" />
     <Compile Include="Servico\Carros\ServCarros.cs" />
+    <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoCargaDTO.cs" />
+    <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoDTO.cs" />
     <Compile Include="Servico\Importacao\IServImportacao.cs" />
     <Compile Include="Servico\Importacao\ServImportacao.cs" />
     <Compile Include="Usuarios\BaseUsuarios.cs" />

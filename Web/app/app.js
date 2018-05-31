@@ -1,7 +1,11 @@
-﻿var MyApp = angular.module('myApp', [ 'ngMaterial', 'ngMessages', 'ngRoute', 'cl.paging']).controller('AppCtrl', AppCtrl);
+﻿var MyApp = angular.module('myApp', ['ngMaterial', 'ngMessages', 'ngRoute', 'cl.paging', 'chart.js']).controller('AppCtrl', AppCtrl);
 
 function AppCtrl($scope) {
     $scope.currentNavItem = 'dashboard';
+
+    (function (ChartJsProvider) {
+        ChartJsProvider.setOptions({ colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+    }); 
 }
 
 AppCtrl

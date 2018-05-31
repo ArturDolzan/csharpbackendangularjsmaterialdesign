@@ -1,0 +1,14 @@
+﻿<md-dialog>
+    <div class="container" ng-init="graficoCriar()">
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series"
+                        chart-options="options" chart-dataset-override="datasetOverride"></canvas>
+            </div>
+        </div>
+    </div>
+    <md-progress-circular md-mode="indeterminate" style="display:inline; position:fixed; bottom:50%; left:50%;" ng-show="isLoading"></md-progress-circular>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="cancel()">Fechar</md-button>
+    </md-dialog-actions>
+</md-dialog>

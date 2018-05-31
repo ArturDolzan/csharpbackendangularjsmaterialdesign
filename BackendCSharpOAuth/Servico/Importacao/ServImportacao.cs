@@ -24,6 +24,30 @@ namespace BackendCSharpOAuth.Servico
             _servCarros = servCarros;
         }
 
+        public List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto)
+        {
+            var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao && x.NomeColuna == dto.NomeColuna).Select(p => new
+            {
+                p.DataLeitura,
+                p.ValorLeitura
+            }).OrderBy(p => p.DataLeitura).ToList();
+
+            var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
+
+            foreach (var item in retorno)
+            {
+                var recuperarGraficoDTO = new RecuperarGraficoDTO()
+                {
+                    DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm"),
+                    ValorLeitura = item.ValorLeitura
+                };
+
+                listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
+            }
+
+            return listRecuperarGraficoDTO;
+        }
+
         public List<Carros> ListarCarros()
         {
             return _servCarros.ListarSearchField();

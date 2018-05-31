@@ -286,6 +286,74 @@
                  $scope.isLoading = false;
                  $scope.showToast(response.data.Mensagem);
             });
+      },
+
+      $scope.graficoImportacao = function(event, id){
+        
+        $scope.Id = id;
+
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: './app/importacao/grafico/grafico_importacao.template.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            fullscreen: true
+        }).then(
+            function () { 
+               
+
+            },
+
+            // user clicked 'Cancel'
+            function () {
+                $scope.data = [];
+                $scope.labels = [];
+            }
+        );
+      },
+
+      $scope.graficoCriar = function(){
+         $scope.isLoading = true;
+         importacaoFactory.recuperarGrafico($scope.Id, 'Motor - Dianteiro').then(function successCallback(response){
+             $scope.graficoRenderizar(response.data.Content);
+         }, function errorCallback(response){
+            $scope.isLoading = false;
+                 $scope.showToast(response.data.Mensagem);
+         });
+
+        
+      },
+
+      $scope.graficoRenderizar = function (dto){
+
+        $scope.labels = [];
+        $scope.data = [];
+
+        $.each(dto, function( index, value ) {
+            $scope.labels.push(value.DataLeitura);
+            $scope.data.push(value.ValorLeitura);
+        });
+
+        $scope.series = ['Series A'];
+
+        $scope.datasetOverride = [{
+            yAxisID: 'y-axis-1'     
+        }];
+
+        $scope.options = {
+            scales: {
+                yAxes: [{
+                    id: 'y-axis-1',
+                    type: 'linear',
+                    display: true,
+                    position: 'left'
+                }]
+            }
+        };
+      
+        $scope.isLoading = false;
       }
 
     function DialogController($scope, $mdDialog) {

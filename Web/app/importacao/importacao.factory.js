@@ -70,8 +70,17 @@
             url: 'http://localhost:55090/api/Importacao/Pesquisar'
         });
       };
-  
-  // updateProduct will be here
+
+      factory.recuperarGrafico = function(codigoImportacao, nomeColuna){
+        return $http({
+            method: 'POST',
+            data: {
+                'CodigoImportacao': codigoImportacao,
+                'NomeColuna':nomeColuna
+            },
+            url: 'http://localhost:55090/api/Importacao/RecuperarGrafico'
+        });
+      };
 
     return factory;
 });
