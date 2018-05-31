@@ -31,7 +31,7 @@ namespace BackendCSharpOAuth.Servico
 
         public List<Importacao> PesquisarImportacao(PesquisaDTO dto)
         {
-            return _db.Importacao.Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit).ToList();
+            return _db.Importacao.Include("Carros").Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit).ToList();
         }
 
         public TotalPaginacaoDTO RecuperarTotalRegistros()
@@ -199,6 +199,14 @@ namespace BackendCSharpOAuth.Servico
                 throw new Exception(e.InnerException.InnerException.Message);
             }
 
+        }
+
+        public TotalPaginacaoDTO RecuperarTotalRegistrosFiltro(PesquisaDTO dto)
+        {
+            return new TotalPaginacaoDTO
+            {
+                Quantidade = _db.Importacao.Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).Count()
+            };
         }
     }
 }

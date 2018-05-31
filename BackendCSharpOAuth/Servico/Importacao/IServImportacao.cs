@@ -18,5 +18,6 @@ namespace BackendCSharpOAuth.Servico
         Importacao RecuperarPorId(CodigoPadraoDTO dto);
         List<Carros> ListarCarros();
         void Remover(CodigoPadraoDTO dto);
+        TotalPaginacaoDTO RecuperarTotalRegistrosFiltro(PesquisaDTO dto);
     }
 }

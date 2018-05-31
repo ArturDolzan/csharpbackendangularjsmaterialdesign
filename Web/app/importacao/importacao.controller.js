@@ -175,10 +175,6 @@
                 $scope.showToast(response.data.Mensagem);
             });
         }
-
-        
-
-        
     },
 
     $scope.clearImportacaoForm = function () {
@@ -267,10 +263,10 @@
       
       },
 
-      $scope.pesquisarCarro = function(){
+      $scope.pesquisarImportacao = function(){
     
-            if(!$scope.carro_search_keywords){
-                $scope.listarCarro();
+            if(!$scope.importacao_search_keywords){
+                $scope.listarImportacao();
                 return;
             }
 
@@ -280,11 +276,15 @@
                 limit: $scope.paging.qtde
             };
 
-            carrosFactory.pesquisarCarro(paginacao, $scope.carro_search_keywords).then(function successCallback(response){
-            $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
-            $scope.carros = response.data.Content;
+            $scope.isLoading = true;
+
+            importacaoFactory.pesquisarImportacao(paginacao, $scope.importacao_search_keywords).then(function successCallback(response){
+                 $scope.isLoading = false;
+                 $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
+                 $scope.importacoes = response.data.Content;
             }, function errorCallback(response){
-            $scope.showToast(response.data.Mensagem);
+                 $scope.isLoading = false;
+                 $scope.showToast(response.data.Mensagem);
             });
       }
 

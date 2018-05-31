@@ -58,7 +58,7 @@
         });
     };
 
-    factory.pesquisarCarro = function(paginacao, keywords){
+    factory.pesquisarImportacao = function(paginacao, keywords){
         return $http({
             method: 'POST',
             data: {
@@ -67,7 +67,7 @@
                 'Start': paginacao.start,
                 'Limit': paginacao.limit
             },
-            url: 'http://localhost:55090/api/Carros/Pesquisar'
+            url: 'http://localhost:55090/api/Importacao/Pesquisar'
         });
       };
   
