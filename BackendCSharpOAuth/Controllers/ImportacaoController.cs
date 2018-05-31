@@ -131,5 +131,19 @@ namespace BackendCSharpOAuth.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
             }
         }
+
+        public HttpResponseMessage Remover(CodigoPadraoDTO dto)
+        {
+            try
+            {
+                _servImportacao.Remover(dto);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Mensagem = "Registro removido com sucesso!" });
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
+            }
+        }
     }
 }

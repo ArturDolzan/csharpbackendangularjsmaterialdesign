@@ -173,9 +173,6 @@ namespace BackendCSharpOAuth.Servico
            
         }
 
-
-
-
         public Importacao RecuperarPorId(CodigoPadraoDTO dto)
         {
             var registro = _db.Importacao.Include("Carros").FirstOrDefault(x => x.Id == dto.Id);
@@ -186,6 +183,22 @@ namespace BackendCSharpOAuth.Servico
             }
 
             return registro;
+        }
+
+        public void Remover(CodigoPadraoDTO dto)
+        {           
+            var registro = RecuperarPorId(dto);
+
+            try
+            {
+                _db.Importacao.Remove(registro);
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.InnerException.InnerException.Message);
+            }
+
         }
     }
 }

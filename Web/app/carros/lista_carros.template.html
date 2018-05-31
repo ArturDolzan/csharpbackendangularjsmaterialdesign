@@ -47,7 +47,8 @@
                 </md-list-item>
             </md-list>
         </md-content>
-               
+
+         <md-progress-circular md-mode="indeterminate" style="display:inline; position:fixed; bottom:50%; left:50%;" ng-show="isLoading"></md-progress-circular>     
          <cl-paging flex cl-pages="paging.total", cl-steps="6", cl-page-changed="paging.onPageChanged()", cl-align="center center", cl-current-page="paging.current"></cl-paging>
 
     </div>

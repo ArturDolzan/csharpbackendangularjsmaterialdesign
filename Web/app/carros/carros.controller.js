@@ -1,5 +1,6 @@
 ﻿MyApp.controller('carrosController', function ($scope, $mdDialog, $mdToast, carrosFactory) {
 
+    $scope.isLoading = false;
     $scope.currentPage = 0;
 
     $scope.paging = {
@@ -36,11 +37,15 @@
             start: $scope.paging.current * $scope.paging.qtde,
             limit: $scope.paging.qtde
         };
-        
+
+        $scope.isLoading = true;
+
         carrosFactory.listarCarro(paginacao).then(function successCallback(response) {
+            $scope.isLoading = false;
             $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
             $scope.carros = response.data.Content;
         }, function errorCallback(response) {
+            $scope.isLoading = false;
             $scope.showToast(response.data.Message);
         });
 
@@ -61,8 +66,10 @@
 
     $scope.salvarCarro = function () {
 
+        $scope.isLoading = true;
+
         carrosFactory.salvarCarro($scope).then(function successCallback(response) {
-          
+            $scope.isLoading = false;
             $scope.showToast(response.data.Mensagem);
 
             // refresh the list
@@ -75,6 +82,7 @@
             $scope.clearCarrosForm();
 
         }, function errorCallback(response) {
+            $scope.isLoading = false;
             $scope.showToast(response.data.Mensagem);
             $scope.clearCarrosForm();
         });
@@ -167,11 +175,17 @@
             limit: $scope.paging.qtde
         };
 
+        $scope.isLoading = true;
+
         carrosFactory.pesquisarCarro(paginacao, $scope.carro_search_keywords).then(function successCallback(response){
-          $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
-          $scope.carros = response.data.Content;
+            $scope.isLoading = false;
+
+            $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
+            $scope.carros = response.data.Content;
         }, function errorCallback(response){
-          $scope.showToast(response.data.Mensagem);
+            $scope.isLoading = false;
+            
+            $scope.showToast(response.data.Mensagem);
         });
       }
 

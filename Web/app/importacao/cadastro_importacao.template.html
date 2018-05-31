@@ -1,4 +1,4 @@
-﻿<md-dialog >
+﻿<md-dialog>
     <form name="importacaoForm" novalidate ng-submit="importacaoForm.$valid" ng-cloak>
 
         <md-toolbar>
@@ -9,7 +9,7 @@
 
         <md-dialog-content>
             <div class="md-dialog-content">
-
+                <md-progress-circular md-mode="indeterminate" style="display:inline; position:fixed; bottom:50%; left:50%;" ng-show="isLoading"></md-progress-circular>
                 <div layout-gt-xs="row">
 
                     <md-input-container class="md-block">
@@ -41,7 +41,7 @@
                 </md-input-container>
 
                 <div class="form-group" layout="row" flex>
-                    <md-input-container class="md-block" >
+                    <md-input-container class="md-block">
                         <md-select placeholder="Selecione o carro" ng-model="carro" required name="carros" ng-model-options="{trackBy: '$value.Id' }" md-on-open="loadCarros()" style="min-width: 600px;">
                             <md-option ng-value="carro" ng-repeat="carro in carros">{{carro.Descricao}}</md-option>
                         </md-select>
@@ -65,9 +65,11 @@
 
         </md-dialog-content>
 
+
         <md-dialog-actions layout="row">
             <md-button ng-click="cancel()">Cancelar</md-button>
             <md-button type="submit" ng-click="importacaoForm.$valid && salvarImportacao()" class="md-primary">Salvar</md-button>
         </md-dialog-actions>
     </form>
+    
 </md-dialog>

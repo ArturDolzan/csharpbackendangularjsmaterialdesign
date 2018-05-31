@@ -1,5 +1,7 @@
 ﻿MyApp.controller('importacaoController', function ($scope, $mdDialog, $mdToast, importacaoFactory) {
 
+    $scope.isLoading = false;
+
     $scope.carro = null;
     $scope.carros = [];
     $scope.show_filters = false;
@@ -54,12 +56,20 @@
             start: $scope.paging.current * $scope.paging.qtde,
             limit: $scope.paging.qtde
         };
-        
+
+        $scope.isLoading = true;
+
         importacaoFactory.listarImportacao(paginacao).then(function successCallback(response) {
             $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
             $scope.importacoes = response.data.Content;
+
+            $scope.isLoading = false;
+
         }, function errorCallback(response) {
             $scope.showToast(response.data.Message);
+
+            $scope.isLoading = false;
+
         });
 
     },
@@ -82,13 +92,15 @@
     },
 
     $scope.salvarImportacao = function () {
+        
+        $scope.isLoading = true;
 
         if(!$scope.Id){
             if(!$scope.arquivo){
+                $scope.isLoading = false;
                 $scope.showToast("Selecione o arquivo para salvar...");
                 return;
             }
-            debugger;
 
             xhr = new XMLHttpRequest();
             formData = new FormData();
@@ -118,12 +130,24 @@
             };
 
             xhr.onload=function(){
-                debugger;
+     
                 if (xhr.status===200||xhr.status===202) {
+                    $scope.isLoading = false;
+
+                    $scope.showToast('Importacao realizada com sucesso!');
+    
+                    // refresh the list
+                    $scope.listarImportacao();
         
+                    // close dialog
+                    $scope.cancel();
+        
+                    // remove form values
+                    $scope.clearImportacaoForm();
                  
                 }else{
-                  
+                    $scope.isLoading = false;
+                    $scope.showToast('Erro ao importar =/!');
                 }
 
             };
@@ -133,6 +157,8 @@
         }else{
             importacaoFactory.salvarImportacao($scope).then(function successCallback(response) {
           
+                $scope.isLoading = false;
+
                 $scope.showToast(response.data.Mensagem);
     
                 // refresh the list
@@ -145,6 +171,7 @@
                 $scope.clearImportacaoForm();
     
             }, function errorCallback(response) {
+                $scope.isLoading = false;
                 $scope.showToast(response.data.Mensagem);
             });
         }
@@ -202,13 +229,13 @@
 
     },
 
-    $scope.removerCarro = function (event, id) {
+    $scope.removerImportacao = function (event, id) {
 
         $scope.Id = id;
 
         var confirm = $mdDialog.confirm()
             .title('Pergunta')
-            .textContent('Deseja remover o carro?')
+            .textContent('Deseja remover esta importacao?')
             .targetEvent(event)
             .ok('Sim')
             .cancel('Não');
@@ -216,7 +243,7 @@
         $mdDialog.show(confirm).then(
 
             function () {
-                $scope.confirmaRemoverCarro();
+                $scope.confirmaRemoverImportacao();
             },
 
             function () {
@@ -225,15 +252,16 @@
         );
     },
 
-    $scope.confirmaRemoverCarro = function(){
-
-        carrosFactory.removerCarro($scope.Id).then(function successCallback(response){
+    $scope.confirmaRemoverImportacao = function(){
+        $scope.isLoading = true;
+        importacaoFactory.removerImportacao($scope.Id).then(function successCallback(response){
+            $scope.isLoading = false;
+            $scope.showToast(response.data.Mensagem);
       
-          $scope.showToast(response.data.Mensagem);
-      
-          $scope.listarCarro();
+            $scope.listarImportacao();
       
         }, function errorCallback(response){
+            $scope.isLoading = false;
             $scope.showToast(response.data.Mensagem);
         });
       
