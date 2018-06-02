@@ -373,6 +373,19 @@
                 zoomType: 'x'
             },
 
+            exporting: {
+                chartOptions: { // specific options for the exported image
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    }
+                },
+                fallbackToExportServer: false
+            },
+
             title: {
               text: 'Grafico de temperatura - ' + $scope.NomeColuna
             },

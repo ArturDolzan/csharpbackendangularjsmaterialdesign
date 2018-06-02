@@ -158,6 +158,7 @@
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\dist.min.js" />
+    <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\highcharts.src.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
@@ -907,6 +908,8 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\offline-exporting.js" />
+    <Content Include="Scripts\offline-exporting.src.js" />
     <Content Include="Scripts\sitemap.xml" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -969,7 +972,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54509</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49167/</IISUrl>
+          <IISUrl>http://localhost:49168/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
