@@ -94,6 +94,7 @@
     $scope.salvarImportacao = function () {
         
         $scope.isLoading = true;
+        var url = urlApi.url;
 
         if(!$scope.Id){
             if(!$scope.arquivo){
@@ -123,7 +124,7 @@
             formData.append('Observacao', $scope.Observacao);
             formData.append('Carros', $scope.carro.Id);
 
-            xhr.open('POST', 'http://localhost:55090/api/Importacao/SalvarImportacao', true);
+            xhr.open('POST', url + '/api/Importacao/SalvarImportacao', true);
 
             xhr.onerror=function(){
                 alert('Erro ao processar requisição!');
@@ -387,7 +388,7 @@
             },
 
             title: {
-              text: 'Grafico de temperatura - ' + $scope.NomeColuna
+              text: $scope.NomeColuna
             },
       
             yAxis: {

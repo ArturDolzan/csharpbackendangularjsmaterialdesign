@@ -10,20 +10,22 @@ function AppCtrl($scope) {
 
 MyApp.config(function ($routeProvider, $locationProvider ) {
 
+    var nomeFront = urlApi.nomeFront;
+
     $locationProvider.html5Mode(true);
 
     $routeProvider.when("/index.html", {
-        templateUrl: "/app/dashboard/dashboard_partial.html",
+        templateUrl: nomeFront + "/app/dashboard/dashboard_partial.html",
         controller: 'AppCtrl'
     }).when('/dashboard', {
-        templateUrl: '/app/dashboard/dashboard_partial.html',
+        templateUrl: nomeFront + '/app/dashboard/dashboard_partial.html',
         controller: 'AppCtrl'
     }).when('/carros', {
-            templateUrl: '/app/carros/lista_carros.template.html',
-            controller: 'AppCtrl'
+        templateUrl: nomeFront + '/app/carros/lista_carros.template.html',
+        controller: 'AppCtrl'
     }).when('/importacao', {
-            templateUrl: '/app/importacao/lista_importacao.template.html',
-            controller: 'AppCtrl'
+        templateUrl: nomeFront + '/app/importacao/lista_importacao.template.html',
+        controller: 'AppCtrl'
     });
 });
 
