@@ -103,6 +103,7 @@
     <Content Include="app\carros\cadastro_carros.template.html" />
     <Content Include="app\dashboard\dashboard_partial.html" />
     <Content Include="app\importacao\cadastro_importacao.template.html" />
+    <Content Include="app\importacao\grafico\grafico_coluna_importacao.template.html" />
     <Content Include="app\importacao\grafico\grafico_importacao.template.html" />
     <Content Include="app\importacao\importacao.factory.js" />
     <Content Include="app\importacao\importacao.controller.js" />

@@ -82,5 +82,15 @@
         });
       };
 
+      factory.recuperarGraficoColunas = function(codigoImportacao){
+        return $http({
+            method: 'POST',
+            data: {
+                'CodigoImportacao': codigoImportacao
+            },
+            url: 'http://localhost:55090/api/Importacao/RecuperarNomeColunas'
+        });
+      };
+
     return factory;
 });

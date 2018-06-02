@@ -288,9 +288,43 @@
             });
       },
 
-      $scope.graficoImportacao = function(event, id){
+      $scope.graficoImportacaoColuna = function(event, id){
         
         $scope.Id = id;
+
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: './app/importacao/grafico/grafico_coluna_importacao.template.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            fullscreen: true
+        }).then(
+            function () { 
+
+            },
+
+            // user clicked 'Cancel'
+            function () {
+         
+            }
+        );
+      },
+
+      $scope.graficoColunaCriar = function(){
+
+            importacaoFactory.recuperarGraficoColunas($scope.Id).then(function successCallback(response){
+                $scope.importacoesColuna = response.data.Content;
+            }, function errorCallback(response){
+                    $scope.showToast(response.data.Mensagem);
+            });
+
+      }
+
+      $scope.graficoImportacao = function(event, nomeColuna){
+
+        $scope.NomeColuna = nomeColuna;
 
         $mdDialog.show({
             controller: DialogController,
@@ -303,7 +337,6 @@
         }).then(
             function () { 
                
-
             },
 
             // user clicked 'Cancel'
@@ -315,15 +348,14 @@
       },
 
       $scope.graficoCriar = function(){
+      
          $scope.isLoading = true;
-         importacaoFactory.recuperarGrafico($scope.Id, 'Motor - Dianteiro').then(function successCallback(response){
+         importacaoFactory.recuperarGrafico($scope.Id, $scope.NomeColuna).then(function successCallback(response){
              $scope.graficoRenderizar(response.data.Content);
          }, function errorCallback(response){
             $scope.isLoading = false;
                  $scope.showToast(response.data.Mensagem);
-         });
-
-        
+         });  
       },
 
       $scope.graficoRenderizar = function (dto){
@@ -340,9 +372,9 @@
             chart: {
                 zoomType: 'x'
             },
-            
+
             title: {
-              text: 'Grafico de temperatura'
+              text: 'Grafico de temperatura - ' + $scope.NomeColuna
             },
       
             yAxis: {

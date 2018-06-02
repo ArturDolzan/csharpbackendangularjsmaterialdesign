@@ -24,6 +24,26 @@ namespace BackendCSharpOAuth.Servico
             _servCarros = servCarros;
         }
 
+        public List<RecuperarNomesColunasDTO> RecuperarNomeColunas(RecuperarNomesColunasCargaDTO dto)
+        {
+            var registros = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao).GroupBy(g => g.NomeColuna).Select(x => x.FirstOrDefault()).ToList();
+
+            var listRecuperarNomesColunasDTO = new List<RecuperarNomesColunasDTO>();
+
+            foreach (var item in registros)
+            {
+                var recuperarNomesColunasDTO = new RecuperarNomesColunasDTO()
+                {
+                    NomeColuna = item.NomeColuna
+                };
+
+                listRecuperarNomesColunasDTO.Add(recuperarNomesColunasDTO);
+            }
+
+            return listRecuperarNomesColunasDTO;
+
+        }
+
         public List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto)
         {
             var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao && x.NomeColuna == dto.NomeColuna).Select(p => new
