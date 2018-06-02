@@ -1,4 +1,4 @@
-﻿var MyApp = angular.module('myApp', ['ngMaterial', 'ngMessages', 'ngRoute', 'cl.paging', 'chart.js']).controller('AppCtrl', AppCtrl);
+﻿var MyApp = angular.module('myApp', ['ngMaterial', 'ngMessages', 'ngRoute', 'cl.paging']).controller('AppCtrl', AppCtrl);
 
 function AppCtrl($scope) {
     $scope.currentNavItem = 'dashboard';

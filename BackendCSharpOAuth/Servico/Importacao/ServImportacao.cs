@@ -38,7 +38,7 @@ namespace BackendCSharpOAuth.Servico
             {
                 var recuperarGraficoDTO = new RecuperarGraficoDTO()
                 {
-                    DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm"),
+                    DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
                     ValorLeitura = item.ValorLeitura
                 };
 

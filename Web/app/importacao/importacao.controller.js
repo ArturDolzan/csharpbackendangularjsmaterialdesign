@@ -336,23 +336,31 @@
             $scope.data.push(value.ValorLeitura);
         });
 
-        $scope.series = ['Series A'];
-
-        $scope.datasetOverride = [{
-            yAxisID: 'y-axis-1'     
-        }];
-
-        $scope.options = {
-            scales: {
-                yAxes: [{
-                    id: 'y-axis-1',
-                    type: 'linear',
-                    display: true,
-                    position: 'left'
-                }]
-            }
-        };
+        Highcharts.chart('grafico', {
+            chart: {
+                zoomType: 'x'
+            },
+            
+            title: {
+              text: 'Grafico de temperatura'
+            },
       
+            yAxis: {
+                title: {
+                    text: 'Temperatura (C)'
+                }
+            },
+
+            xAxis: {
+              categories: $scope.labels
+            },
+      
+            series: [{
+              name: 'Temperatura (C)',
+              data: $scope.data
+            }]
+          });
+
         $scope.isLoading = false;
       }
 
