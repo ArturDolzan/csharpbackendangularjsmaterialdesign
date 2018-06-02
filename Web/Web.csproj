@@ -97,6 +97,7 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\assets\css\custom.css" />
+    <Content Include="app\assets\img\lightning-electric-energy.png" />
     <Content Include="app\carros\carros.controller.js" />
     <Content Include="app\carros\carros.factory.js" />
     <Content Include="app\carros\lista_carros.template.html" />

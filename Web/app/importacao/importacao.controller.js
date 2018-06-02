@@ -60,7 +60,7 @@
         $scope.isLoading = true;
 
         importacaoFactory.listarImportacao(paginacao).then(function successCallback(response) {
-            $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
+            $scope.paging.total = Math.ceil(response.data.Quantidade.Quantidade / $scope.paging.qtde);
             $scope.importacoes = response.data.Content;
 
             $scope.isLoading = false;
@@ -280,7 +280,7 @@
 
             importacaoFactory.pesquisarImportacao(paginacao, $scope.importacao_search_keywords).then(function successCallback(response){
                  $scope.isLoading = false;
-                 $scope.paging.total = Math.trunc(response.data.Quantidade.Quantidade / $scope.paging.qtde) + 1;
+                 $scope.paging.total = Math.ceil(response.data.Quantidade.Quantidade / $scope.paging.qtde);
                  $scope.importacoes = response.data.Content;
             }, function errorCallback(response){
                  $scope.isLoading = false;
