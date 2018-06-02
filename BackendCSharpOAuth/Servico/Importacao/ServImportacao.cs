@@ -24,6 +24,32 @@ namespace BackendCSharpOAuth.Servico
             _servCarros = servCarros;
         }
 
+        public List<RecuperarGraficoPizzaDTO> RecuperarGraficoPizza()
+        {
+            var dados = _db.Importacao.GroupBy(x => new { x.Carros.Id, x.Carros.Descricao }).Select(x => new
+            {
+                Qtde = x.Count(),
+                DescricaoCarro = x.Key.Descricao,
+                CodigoCarro = x.Key.Id
+            }).OrderBy(x => x.CodigoCarro).ThenBy(x => x.DescricaoCarro).ToList();
+
+            var listRecuperarGraficoPizzaDTO = new List<RecuperarGraficoPizzaDTO>();
+
+            foreach (var item in dados)
+            {
+                var recuperarGraficoPizzaDTO = new RecuperarGraficoPizzaDTO()
+                {
+                    CodigoCarro = item.CodigoCarro,
+                    DescricaoCarro = item.DescricaoCarro,
+                    Qtde = item.Qtde
+                };
+
+                listRecuperarGraficoPizzaDTO.Add(recuperarGraficoPizzaDTO);
+            }
+
+            return listRecuperarGraficoPizzaDTO;
+        }
+
         public List<RecuperarNomesColunasDTO> RecuperarNomeColunas(RecuperarNomesColunasCargaDTO dto)
         {
             var registros = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao).GroupBy(g => g.NomeColuna).Select(x => x.FirstOrDefault()).ToList();

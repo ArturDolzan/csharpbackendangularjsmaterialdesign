@@ -11,6 +11,7 @@ namespace BackendCSharpOAuth.Servico
 {
     public interface IServImportacao
     {
+        List<RecuperarGraficoPizzaDTO> RecuperarGraficoPizza();
         List<RecuperarNomesColunasDTO> RecuperarNomeColunas(RecuperarNomesColunasCargaDTO dto);
         List<Importacao> PesquisarImportacao(PesquisaDTO dto);
         TotalPaginacaoDTO RecuperarTotalRegistros();

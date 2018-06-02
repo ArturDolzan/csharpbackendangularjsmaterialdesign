@@ -284,6 +284,7 @@
     <Compile Include="Servico\Carros\ServCarros.cs" />
     <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoCargaDTO.cs" />
     <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoDTO.cs" />
+    <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoPizzaDTO.cs" />
     <Compile Include="Servico\Importacao\DTOs\RecuperarNomesColunasCargaDTO.cs" />
     <Compile Include="Servico\Importacao\DTOs\RecuperarNomesColunasDTO.cs" />
     <Compile Include="Servico\Importacao\IServImportacao.cs" />

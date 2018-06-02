@@ -102,6 +102,7 @@
     <Content Include="app\carros\carros.factory.js" />
     <Content Include="app\carros\lista_carros.template.html" />
     <Content Include="app\carros\cadastro_carros.template.html" />
+    <Content Include="app\dashboard\dashboard.factory.js" />
     <Content Include="app\dashboard\dashboard_partial.html" />
     <Content Include="app\importacao\cadastro_importacao.template.html" />
     <Content Include="app\importacao\grafico\grafico_coluna_importacao.template.html" />
@@ -899,6 +900,7 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="app\dashboard\dashboard.controller.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

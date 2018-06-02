@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    DASHBOARD
-</body>
-</html>
+﻿<div layout="row" ng-controller="dashboardController" ng-cloak>
+
+    <div class="container" ng-init="graficoPizzaCriar()">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="graficoPizza"></div>
+            </div>
+        </div>
+    </div>
+    <md-progress-circular md-mode="indeterminate" style="display:inline; position:fixed; bottom:50%; left:50%;" ng-show="isLoading"></md-progress-circular>
+
+</div>
