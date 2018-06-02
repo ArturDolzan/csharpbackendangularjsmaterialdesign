@@ -27,7 +27,7 @@
             <md-list>
                 <md-list-item class="md-3-line" ng-repeat="importacao in importacoes">
 
-                    <div class="md-list-item-text">
+                    <div class="md-list-item-text" ng-dblclick="editarImportacao(importacao.Id)">
                         <h3>{{importacao.Id}}</h3>
                         <h4>{{importacao.DataImportacao | date:'dd-MM-yyyy'}}</h4>
                         <h4>{{importacao.Descricao}}</h4>

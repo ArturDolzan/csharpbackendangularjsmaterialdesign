@@ -29,12 +29,12 @@
                 <md-list-item class="md-3-line" ng-repeat="carro in carros">
 
                     <!-- carro information -->
-                    <div class="md-list-item-text">
+                    <div class="md-list-item-text" ng-dblclick="editarCarro(carro.Id)">
                         <h3>{{carro.Id}}</h3>
                         <h4>{{carro.Descricao}}</h4>
                     </div>
 
-                    <div class="md-secondary-container">
+                    <div class="md-secondary-container" >
                         <md-button class="md-fab md-mini md-primary" ng-click="editarCarro(carro.Id)" aria-label="Editar">
                             <md-icon md-svg-src="app/assets/img/edit.svg"></md-icon>
                         </md-button>
