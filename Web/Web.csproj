@@ -109,6 +109,7 @@
     <Content Include="app\importacao\importacao.factory.js" />
     <Content Include="app\importacao\importacao.controller.js" />
     <Content Include="app\importacao\lista_importacao.template.html" />
+    <Content Include="empconfig.js" />
     <Content Include="index.html" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.layout-attributes.css" />

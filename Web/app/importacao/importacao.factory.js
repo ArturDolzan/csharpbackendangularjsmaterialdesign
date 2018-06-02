@@ -1,12 +1,13 @@
 ﻿MyApp.factory("importacaoFactory", function ($http) {
 
-    var factory = {};
+    var factory = {},
+        url = urlApi.url;
 
     factory.listarCarros = function () {
         
         return $http({
             method: 'POST',
-            url: 'http://localhost:55090/api/Importacao/ListarCarros'
+            url: url +'/api/Importacao/ListarCarros'
         });
     };
 
@@ -19,7 +20,7 @@
                 'Start': paginacao.start,
                 'Limit': paginacao.limit
             },
-            url: 'http://localhost:55090/api/Importacao/Listar'
+            url: url +'/api/Importacao/Listar'
         });
     };
 
@@ -34,7 +35,7 @@
                 'Observacao': $scope.Observacao,
                 'Carros': $scope.carro
             },
-            url: 'http://localhost:55090/api/Importacao/Salvar'
+            url: url +'/api/Importacao/Salvar'
         });
     };
 
@@ -44,7 +45,7 @@
             data: {
                 'Id': id
             },
-            url: 'http://localhost:55090/api/Importacao/RecuperarPorId'
+            url: url +'/api/Importacao/RecuperarPorId'
         });
     };
 
@@ -54,7 +55,7 @@
             data: {
                 'Id': id
             },
-            url: 'http://localhost:55090/api/Importacao/Remover'
+            url: url +'/api/Importacao/Remover'
         });
     };
 
@@ -67,7 +68,7 @@
                 'Start': paginacao.start,
                 'Limit': paginacao.limit
             },
-            url: 'http://localhost:55090/api/Importacao/Pesquisar'
+            url: url +'/api/Importacao/Pesquisar'
         });
       };
 
@@ -78,7 +79,7 @@
                 'CodigoImportacao': codigoImportacao,
                 'NomeColuna':nomeColuna
             },
-            url: 'http://localhost:55090/api/Importacao/RecuperarGrafico'
+            url: url +'/api/Importacao/RecuperarGrafico'
         });
       };
 
@@ -88,7 +89,7 @@
             data: {
                 'CodigoImportacao': codigoImportacao
             },
-            url: 'http://localhost:55090/api/Importacao/RecuperarNomeColunas'
+            url: url +'/api/Importacao/RecuperarNomeColunas'
         });
       };
 

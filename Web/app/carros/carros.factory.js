@@ -1,7 +1,8 @@
 ﻿MyApp.factory("carrosFactory", function ($http) {
 
-    var factory = {};
-
+    var factory = {},
+        url = urlApi.url;
+   
     factory.listarCarro = function (paginacao) {
         
         return $http({
@@ -11,7 +12,7 @@
                 'Start': paginacao.start,
                 'Limit': paginacao.limit
             },
-            url: 'http://localhost:55090/api/Carros/Listar'
+            url: url+'/api/Carros/Listar'
         });
     };
 
@@ -23,7 +24,7 @@
                 'Ativo': true,
                 'Id': $scope.Id
             },
-            url: 'http://localhost:55090/api/Carros/Salvar'
+            url: url +'/api/Carros/Salvar'
         });
     };
 
@@ -33,7 +34,7 @@
             data: {
                 'Id': id
             },
-            url: 'http://localhost:55090/api/Carros/RecuperarPorId'
+            url: url +'/api/Carros/RecuperarPorId'
         });
     };
 
@@ -43,7 +44,7 @@
             data: {
                 'Id': id
             },
-            url: 'http://localhost:55090/api/Carros/Remover'
+            url: url +'/api/Carros/Remover'
         });
     };
 
@@ -56,7 +57,7 @@
                 'Start': paginacao.start,
                 'Limit': paginacao.limit
             },
-            url: 'http://localhost:55090/api/Carros/Pesquisar'
+            url: url +'/api/Carros/Pesquisar'
         });
       };
   
