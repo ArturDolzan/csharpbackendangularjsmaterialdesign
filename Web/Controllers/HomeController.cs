@@ -10,7 +10,8 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect(this.HttpContext.Request.Url + "index.html");
+
+            return Redirect(this.HttpContext.Request.Url + @"\index.html");
         }
 
     }

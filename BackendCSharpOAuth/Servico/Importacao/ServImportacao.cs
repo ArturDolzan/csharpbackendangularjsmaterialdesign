@@ -10,6 +10,7 @@ using System.Web;
 using PostgreSQLCopyHelper;
 using Npgsql;
 using Npgsql.Bulk;
+using System.Globalization;
 
 namespace BackendCSharpOAuth.Servico
 {
@@ -101,7 +102,25 @@ namespace BackendCSharpOAuth.Servico
 
         public List<Importacao> PesquisarImportacao(PesquisaDTO dto)
         {
-            return _db.Importacao.Include("Carros").Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit).ToList();
+            var registros = _db.Importacao.Include("Carros").Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit);
+
+            var listImportacao = new List<Importacao>();
+
+            foreach (var item in registros)
+            {
+                var importacao = new Importacao()
+                {
+                    Carros = item.Carros,
+                    DataImportacao = item.DataImportacao,
+                    Descricao = item.Descricao,
+                    Id = item.Id,
+                    Observacao = item.Observacao
+                };
+
+                listImportacao.Add(importacao);
+            }
+
+            return listImportacao;
         }
 
         public TotalPaginacaoDTO RecuperarTotalRegistros()
@@ -114,7 +133,26 @@ namespace BackendCSharpOAuth.Servico
 
         public List<Importacao> Listar(QueryPaginacaoDTO dto)
         {
-            return _db.Importacao.Include("Carros").OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit).ToList();
+            var registros = _db.Importacao.Include("Carros").OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit);
+
+            var listImportacao = new List<Importacao>();
+
+            foreach (var item in registros)
+            {
+                var importacao = new Importacao()
+                {
+                    Carros = item.Carros,
+                    DataImportacao = item.DataImportacao,
+                    Descricao = item.Descricao,
+                    Id = item.Id,
+                    Observacao = item.Observacao
+                };
+
+                listImportacao.Add(importacao);
+            }
+
+            return listImportacao;
+
         }
 
         
@@ -188,7 +226,9 @@ namespace BackendCSharpOAuth.Servico
             var valor = File.ReadAllLines(arquivo).Select(x => x.Split(';')).ToList();
             var listImportacaoColunas = new List<ImportacaoColunas>();
 
-           
+            CultureInfo[] cultures = { new CultureInfo("en-US") };
+
+
             foreach (var itemValor in valor.ToList().Skip(1))
             {
                 var dado = itemValor;
@@ -201,12 +241,12 @@ namespace BackendCSharpOAuth.Servico
                     var dataV = data.Substring(0, data.IndexOf(","));
 
                     DateTime d = new DateTime();
-                    Decimal v = 0M;
+                    Decimal v = 0.00M;
 
                     try
                     {
                         d = Convert.ToDateTime(dataV);
-                        v = Convert.ToDecimal(valores);
+                        v = Convert.ToDecimal(valores.Replace(",", "."), cultures[0]);//Convert.ToDecimal(valores);
                     }
                     catch (Exception)
                     {
@@ -245,19 +285,34 @@ namespace BackendCSharpOAuth.Servico
 
         public Importacao RecuperarPorId(CodigoPadraoDTO dto)
         {
-            var registro = _db.Importacao.Include("Carros").FirstOrDefault(x => x.Id == dto.Id);
+            var registro = _db.Importacao.Include("Carros").Select(x=> new {
+                x.Carros,
+                x.DataImportacao,
+                x.Descricao,
+                x.Id,
+                x.Observacao
+            }).FirstOrDefault(x => x.Id == dto.Id);
 
             if (registro == null)
             {
                 throw new Exception("Registro " + dto.Id + " não encontrado! ");
             }
 
-            return registro;
+            var importacao = new Importacao()
+            {
+                Carros = registro.Carros,
+                DataImportacao = registro.DataImportacao,
+                Descricao = registro.Descricao,
+                Id = registro.Id,
+                Observacao = registro.Observacao
+            };
+
+            return importacao;
         }
 
         public void Remover(CodigoPadraoDTO dto)
-        {           
-            var registro = RecuperarPorId(dto);
+        {
+            var registro = _db.Importacao.FirstOrDefault(x => x.Id == dto.Id);
 
             try
             {

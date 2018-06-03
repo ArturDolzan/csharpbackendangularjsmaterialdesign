@@ -253,6 +253,7 @@
         $scope.isLoading = true;
         importacaoFactory.removerImportacao($scope.Id).then(function successCallback(response){
             $scope.isLoading = false;
+            $scope.Id = null;
             $scope.showToast(response.data.Mensagem);
       
             $scope.listarImportacao();
