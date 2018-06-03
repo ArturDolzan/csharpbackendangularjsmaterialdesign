@@ -282,6 +282,7 @@
     <Compile Include="Models\ImportacaoColunas.cs" />
     <Compile Include="Servico\Carros\IServCarros.cs" />
     <Compile Include="Servico\Carros\ServCarros.cs" />
+    <Compile Include="Servico\Importacao\DTOs\MaioresTemperaturasUltimaImportacaoDTO.cs" />
     <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoCargaDTO.cs" />
     <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoDTO.cs" />
     <Compile Include="Servico\Importacao\DTOs\RecuperarGraficoPizzaDTO.cs" />

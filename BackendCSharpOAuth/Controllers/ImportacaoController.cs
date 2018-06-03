@@ -23,6 +23,21 @@ namespace BackendCSharpOAuth.Controllers
             _servImportacao = servImportacao;
         }
 
+        public HttpResponseMessage RecuperarGraficoBarra()
+        {
+            try
+            {
+
+                var grafico = _servImportacao.RecuperarGraficoBarra();
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Grafico de barras recuperado com sucesso!" });
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
+            }
+        }
+
         public HttpResponseMessage RecuperarGraficoPizza()
         {
             try

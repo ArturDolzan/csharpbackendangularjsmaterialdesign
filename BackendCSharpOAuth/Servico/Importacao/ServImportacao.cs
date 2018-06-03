@@ -25,6 +25,34 @@ namespace BackendCSharpOAuth.Servico
             _servCarros = servCarros;
         }
 
+        public List<MaioresTemperaturasUltimaImportacaoDTO> RecuperarGraficoBarra()
+        {
+            var maiorCodigoImportacao = _db.Importacao.Max(x => x.Id);
+
+            var dados = _db.ImportacaoColunas.Where(x=>x.CodigoImportacao == maiorCodigoImportacao).GroupBy(x => new { x.NomeColuna }).Select(x => new
+            {
+                MaxValorLeitura = x.Max(m => m.ValorLeitura),
+                MinValorLeitura = x.Min(m => m.ValorLeitura),
+                x.Key.NomeColuna
+            }).OrderBy(x => x.NomeColuna).ToList();
+
+            var listMaioresTemperaturas = new List<MaioresTemperaturasUltimaImportacaoDTO>();
+
+            foreach (var item in dados)
+            {
+                var maioresTemperaturasUltimaImportacaoDTO = new MaioresTemperaturasUltimaImportacaoDTO()
+                {
+                    NomeColuna = item.NomeColuna,
+                    MaxValorLeitura = item.MaxValorLeitura,
+                    MinValorLeitura = item.MinValorLeitura
+                };
+
+                listMaioresTemperaturas.Add(maioresTemperaturasUltimaImportacaoDTO);
+            }
+
+            return listMaioresTemperaturas;
+        }
+
         public List<RecuperarGraficoPizzaDTO> RecuperarGraficoPizza()
         {
             var dados = _db.Importacao.GroupBy(x => new { x.Carros.Id, x.Carros.Descricao }).Select(x => new

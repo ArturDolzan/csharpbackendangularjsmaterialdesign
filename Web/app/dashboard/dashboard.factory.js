@@ -12,5 +12,14 @@
         });
         };
 
+    factory.recuperarGraficoBarra = function(){
+        return $http({
+            method: 'POST',
+            data: {
+            },
+            url: url +'/api/Importacao/RecuperarGraficoBarra'
+        });
+        };
+
     return factory;
 });
