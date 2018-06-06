@@ -9,6 +9,15 @@
 
     $scope.currentPage = 0;
 
+    $scope.itemImportacoesObj = [{
+        Id: 1,
+        Descricao: 'Teste tuca'
+    },{
+        Id: 2,
+        Descricao: 'Teste tuca 2'
+    }];
+    $scope.selectedImportacoes = [1];
+
     $scope.paging = {
         total: 1,
         current: 1,
@@ -288,6 +297,45 @@
                  $scope.isLoading = false;
                  $scope.showToast(response.data.Mensagem);
             });
+      },
+
+      $scope.graficoImportacaoComparacao = function(event, id){
+         
+            $scope.Id = id;
+
+            $mdDialog.show({
+                controller: DialogController,
+                templateUrl: './app/importacao/grafico/grafico_importacao_comparacao.template.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: true,
+                scope: $scope,
+                preserveScope: true,
+                fullscreen: true
+            }).then(
+                function () { 
+
+                },
+
+                // user clicked 'Cancel'
+                function () {
+            
+                }
+            );
+
+      },
+
+      $scope.toggle = function (item, list) {
+        var idx = list.indexOf(item);
+        if (idx > -1) {
+          list.splice(idx, 1);
+        }
+        else {
+          list.push(item);
+        }
+      },
+    
+      $scope.existe = function (item, list) {
+        return list.indexOf(item) > -1;
       },
 
       $scope.graficoImportacaoColuna = function(event, id){
