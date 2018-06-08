@@ -7,6 +7,7 @@ namespace BackendCSharpOAuth.Servico
 {
     public class RecuperarNomesColunasDTO
     {
+        public int CodigoImportacao { get; set; }
         public string NomeColuna { get; set; }
     }
 }

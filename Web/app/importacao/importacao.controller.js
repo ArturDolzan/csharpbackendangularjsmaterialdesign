@@ -9,14 +9,11 @@
 
     $scope.currentPage = 0;
 
-    $scope.itemImportacoesObj = [{
-        Id: 1,
-        Descricao: 'Teste tuca'
-    },{
-        Id: 2,
-        Descricao: 'Teste tuca 2'
-    }];
     $scope.selectedImportacoes = [1];
+
+    $scope.compararImportacao = {
+        segundaAbaBloqueada: true
+    };
 
     $scope.paging = {
         total: 1,
@@ -300,7 +297,7 @@
       },
 
       $scope.graficoImportacaoComparacao = function(event, id){
-         
+     
             $scope.Id = id;
 
             $mdDialog.show({
@@ -324,7 +321,23 @@
 
       },
 
+      $scope.recuperarImportacoesComparacoes = function (){
+         
+            var codigoImportacao = $scope.importacoesColuna[0].CodigoImportacao;
+
+            importacaoFactory.recuperarImportacoesComparacao(codigoImportacao).then(function successCallback(response){
+                    
+                $scope.itemImportacoesObj = response.data.Content;
+
+            }, function errorCallback(response){
+                    $scope.showToast(response.data.Mensagem);
+            });
+
+
+      },
+
       $scope.toggle = function (item, list) {
+
         var idx = list.indexOf(item);
         if (idx > -1) {
           list.splice(idx, 1);
@@ -365,6 +378,7 @@
       $scope.graficoColunaCriar = function(){
 
             importacaoFactory.recuperarGraficoColunas($scope.Id).then(function successCallback(response){
+                
                 $scope.importacoesColuna = response.data.Content;
             }, function errorCallback(response){
                     $scope.showToast(response.data.Mensagem);

@@ -83,6 +83,16 @@
         });
       };
 
+      factory.recuperarImportacoesComparacao = function(codigoImportacao){
+        return $http({
+            method: 'POST',
+            data: {
+                'Id': codigoImportacao
+            },
+            url: url +'/api/Importacao/RecuperarImportacoesComparacao'
+        });
+      };
+
       factory.recuperarGraficoColunas = function(codigoImportacao){
         return $http({
             method: 'POST',

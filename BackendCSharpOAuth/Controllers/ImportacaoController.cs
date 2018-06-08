@@ -23,6 +23,21 @@ namespace BackendCSharpOAuth.Controllers
             _servImportacao = servImportacao;
         }
 
+        public HttpResponseMessage RecuperarImportacoesComparacao(CodigoPadraoDTO dto)
+        {
+            try
+            {
+
+                var retorno = _servImportacao.RecuperarImportacoesComparacao(dto);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Importacoes recuperadas com sucesso!" });
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
+            }
+        }
+
         public HttpResponseMessage RecuperarGraficoBarra()
         {
             try

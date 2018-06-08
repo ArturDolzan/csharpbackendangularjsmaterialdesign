@@ -25,6 +25,29 @@ namespace BackendCSharpOAuth.Servico
             _servCarros = servCarros;
         }
 
+        public List<Importacao> RecuperarImportacoesComparacao(CodigoPadraoDTO dto)
+        {
+            var registros = _db.Importacao.Where(x=>x.Id != dto.Id);
+
+            var listImportacao = new List<Importacao>();
+
+            foreach (var item in registros)
+            {
+                var importacao = new Importacao()
+                {
+                    Carros = item.Carros,
+                    DataImportacao = item.DataImportacao,
+                    Descricao = item.Descricao,
+                    Id = item.Id,
+                    Observacao = item.Observacao
+                };
+
+                listImportacao.Add(importacao);
+            }
+
+            return listImportacao;
+        }
+
         public List<MaioresTemperaturasUltimaImportacaoDTO> RecuperarGraficoBarra()
         {
             var maiorCodigoImportacao = _db.Importacao.Max(x => x.Id);
@@ -89,7 +112,8 @@ namespace BackendCSharpOAuth.Servico
             {
                 var recuperarNomesColunasDTO = new RecuperarNomesColunasDTO()
                 {
-                    NomeColuna = item.NomeColuna
+                    NomeColuna = item.NomeColuna,
+                    CodigoImportacao = item.CodigoImportacao
                 };
 
                 listRecuperarNomesColunasDTO.Add(recuperarNomesColunasDTO);
