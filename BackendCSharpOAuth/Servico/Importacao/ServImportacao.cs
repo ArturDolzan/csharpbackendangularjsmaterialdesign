@@ -123,12 +123,13 @@ namespace BackendCSharpOAuth.Servico
 
         }
 
-        public List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto)
+        public List<RecuperarGraficoDTO> RecuperarGraficoComparacao(RecuperarGraficoCargaComparacaoDTO dto)
         {
-            var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao && x.NomeColuna == dto.NomeColuna).Select(p => new
+            var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacaoPrincipal && x.NomeColuna == dto.NomeColuna).Select(p => new
             {
                 p.DataLeitura,
-                p.ValorLeitura
+                p.ValorLeitura,
+                p.CodigoImportacao
             }).OrderBy(p => p.DataLeitura).ToList();
 
             var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
@@ -138,7 +139,56 @@ namespace BackendCSharpOAuth.Servico
                 var recuperarGraficoDTO = new RecuperarGraficoDTO()
                 {
                     DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
-                    ValorLeitura = item.ValorLeitura
+                    ValorLeitura = item.ValorLeitura,
+                    CodigoImportacao = item.CodigoImportacao
+                };
+
+                listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
+            }
+
+            foreach (var item in dto.CodigoImportacao)
+            {
+                var retornoComp = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == item && x.NomeColuna == dto.NomeColuna).Select(p => new
+                {
+                    p.DataLeitura,
+                    p.ValorLeitura,
+                    p.CodigoImportacao
+                }).OrderBy(p => p.DataLeitura).ToList();
+
+                foreach (var itemRet in retornoComp)
+                {
+                    var recuperarGraficoCompDTO = new RecuperarGraficoDTO()
+                    {
+                        DataLeitura = itemRet.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                        ValorLeitura = itemRet.ValorLeitura,
+                        CodigoImportacao = itemRet.CodigoImportacao
+                    };
+
+                    listRecuperarGraficoDTO.Add(recuperarGraficoCompDTO);
+                }
+            }
+
+            return listRecuperarGraficoDTO;
+        }
+
+        public List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto)
+        {
+            var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao && x.NomeColuna == dto.NomeColuna).Select(p => new
+            {
+                p.DataLeitura,
+                p.ValorLeitura,
+                p.CodigoImportacao
+            }).OrderBy(p => p.DataLeitura).ToList();
+
+            var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
+
+            foreach (var item in retorno)
+            {
+                var recuperarGraficoDTO = new RecuperarGraficoDTO()
+                {
+                    DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                    ValorLeitura = item.ValorLeitura,
+                    CodigoImportacao = item.CodigoImportacao
                 };
 
                 listRecuperarGraficoDTO.Add(recuperarGraficoDTO);

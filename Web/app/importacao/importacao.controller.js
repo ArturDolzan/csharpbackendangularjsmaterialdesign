@@ -9,10 +9,13 @@
 
     $scope.currentPage = 0;
 
-    $scope.selectedImportacoes = [1];
+    $scope.selectedImportacoes = [];
 
     $scope.compararImportacao = {
-        segundaAbaBloqueada: true
+        segundaAbaBloqueada: true,
+        index: 0,
+        nomeColuna: '',
+        codigoImportacaoPrincipal: 0
     };
 
     $scope.paging = {
@@ -299,6 +302,13 @@
       $scope.graficoImportacaoComparacao = function(event, id){
      
             $scope.Id = id;
+            $scope.compararImportacao.nomeColuna = id;
+
+            $scope.labels = [];
+            $scope.data = [];
+            $scope.resetGraficoComparacao();
+            $scope.selectedImportacoes = [];
+            $scope.compararImportacao.segundaAbaBloqueada = true;
 
             $mdDialog.show({
                 controller: DialogController,
@@ -310,12 +320,12 @@
                 fullscreen: true
             }).then(
                 function () { 
-
+                    
                 },
 
                 // user clicked 'Cancel'
                 function () {
-            
+                   
                 }
             );
 
@@ -338,22 +348,121 @@
 
       $scope.toggle = function (item, list) {
 
-        var idx = list.indexOf(item);
-        if (idx > -1) {
-          list.splice(idx, 1);
-        }
-        else {
-          list.push(item);
-        }
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+            list.splice(idx, 1);
+            }
+            else {
+            list.push(item);
+            }
+
+            if(list.length > 0){
+                $scope.compararImportacao.segundaAbaBloqueada = false;
+            }else{
+                $scope.compararImportacao.segundaAbaBloqueada = true;
+            }
+        
       },
     
       $scope.existe = function (item, list) {
         return list.indexOf(item) > -1;
       },
 
+      $scope.selecionaTab = function(){
+         var me = this,
+             codigosImportacoes = me.selectedImportacoes;
+
+            $scope.labels = [];
+            $scope.data = [];
+            $scope.resetGraficoComparacao();
+            $scope.isLoading = true;
+
+            importacaoFactory.recuperarGraficoComparacao(me.compararImportacao.codigoImportacaoPrincipal, 
+                                                         me.compararImportacao.nomeColuna,
+                                                         codigosImportacoes).then(function successCallback(response){
+                
+                $scope.graficoComparacaoRenderizar(response.data.Content);
+
+            }, function errorCallback(response){
+                $scope.isLoading = false;
+                $scope.showToast(response.data.Mensagem);
+            });
+
+
+      },
+
+      $scope.resetGraficoComparacao = function(){
+            var chart = $('#graficoComparacao').highcharts();
+            if(chart){
+                var seriesLength = chart.series.length;
+                for(var i = seriesLength -1; i > -1; i--) {
+                    chart.series[i].remove();
+                }
+            } 
+      },
+
+      $scope.graficoComparacaoRenderizar = function (dto){
+
+        $scope.labels = [];
+        $scope.data = [];
+
+        $.each(dto, function( index, value ) {
+            $scope.labels.push('Imp. ' +value.CodigoImportacao + ' - ' + value.DataLeitura);
+
+            $scope.data.push(value.ValorLeitura);
+        });
+
+        Highcharts.chart('graficoComparacao', {
+            chart: {
+                zoomType: 'x'
+            },
+
+            exporting: {
+                chartOptions: { // specific options for the exported image
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    }
+                },
+                fallbackToExportServer: false
+            },
+
+            title: {
+              text: $scope.NomeColuna
+            },
+      
+            yAxis: {
+                title: {
+                    text: 'Temperatura (C)'
+                }
+            },
+
+            xAxis: {
+              categories: $scope.labels
+            },
+      
+            series: [{
+              name: 'Temperatura (C)',
+              data: $scope.data
+            }]
+          });
+
+        $scope.isLoading = false;
+   
+      },
+
+      $scope.deselecionaTab = function(){
+         $scope.labels = [];
+         $scope.data = [];
+      },
+
       $scope.graficoImportacaoColuna = function(event, id){
         
         $scope.Id = id;
+        $scope.compararImportacao.codigoImportacaoPrincipal = id;
 
         $mdDialog.show({
             controller: DialogController,

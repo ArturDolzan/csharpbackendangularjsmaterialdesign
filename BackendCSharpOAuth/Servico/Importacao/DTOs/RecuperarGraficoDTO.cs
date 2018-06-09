@@ -9,5 +9,6 @@ namespace BackendCSharpOAuth.Servico
     {
         public string DataLeitura { get; set; }
         public decimal ValorLeitura { get; set; }
+        public int CodigoImportacao { get; set; }
     }
 }

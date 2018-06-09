@@ -83,6 +83,21 @@ namespace BackendCSharpOAuth.Controllers
             }
         }
 
+        public HttpResponseMessage RecuperarGraficoComparacao(RecuperarGraficoCargaComparacaoDTO dto)
+        {
+            try
+            {
+
+                var grafico = _servImportacao.RecuperarGraficoComparacao(dto);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Grafico comparacao recuperado com sucesso!" });
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Mensagem = e.Message });
+            }
+        }
+
         public HttpResponseMessage RecuperarGrafico(RecuperarGraficoCargaDTO dto)
         {
             try

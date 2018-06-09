@@ -24,5 +24,6 @@ namespace BackendCSharpOAuth.Servico
         void Remover(CodigoPadraoDTO dto);
         TotalPaginacaoDTO RecuperarTotalRegistrosFiltro(PesquisaDTO dto);
         List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto);
+        List<RecuperarGraficoDTO> RecuperarGraficoComparacao(RecuperarGraficoCargaComparacaoDTO dto);
     }
 }

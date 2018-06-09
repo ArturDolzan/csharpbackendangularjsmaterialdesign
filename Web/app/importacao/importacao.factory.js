@@ -72,6 +72,18 @@
         });
       };
 
+      factory.recuperarGraficoComparacao = function(codigoImportacaoPrincipal, nomeColuna, codigosImportacoes){
+        return $http({
+            method: 'POST',
+            data: {
+                'CodigoImportacaoPrincipal': codigoImportacaoPrincipal,
+                'CodigoImportacao': codigosImportacoes,
+                'NomeColuna':nomeColuna
+            },
+            url: url +'/api/Importacao/RecuperarGraficoComparacao'
+        });
+      };
+
       factory.recuperarGrafico = function(codigoImportacao, nomeColuna){
         return $http({
             method: 'POST',
