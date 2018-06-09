@@ -381,6 +381,7 @@
                                                          me.compararImportacao.nomeColuna,
                                                          codigosImportacoes).then(function successCallback(response){
                 
+                $scope.NomeColuna = me.compararImportacao.nomeColuna;
                 $scope.graficoComparacaoRenderizar(response.data.Content);
 
             }, function errorCallback(response){
