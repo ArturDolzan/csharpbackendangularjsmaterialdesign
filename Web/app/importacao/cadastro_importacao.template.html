@@ -28,7 +28,7 @@
 
                 <md-input-container class="md-block" md-is-error="importacaoForm.Descricao.$invalid && (importacaoForm.$submitted)">
                     <label>Descrição</label>
-                    <input name="Descricao" id="Descricao" type="text" ng-model="Descricao" ng-required="true" md-maxlength="100">
+                    <input name="Descricao" id="Descricao" type="text" ng-model="Descricao" ng-required="true" md-maxlength="200">
 
                     <div ng-messages="importacaoForm.Descricao.$error" ng-if="importacaoForm.$submitted">
                         <div ng-message="required">Preencha este campo!</div>
@@ -37,7 +37,7 @@
 
                 <md-input-container class="md-block">
                     <label>Observação</label>
-                    <textarea ng-model="Observacao" md-maxlength="150" rows="1" md-select-on-focus></textarea>
+                    <textarea ng-model="Observacao" md-maxlength="350" rows="1" md-select-on-focus></textarea>
                 </md-input-container>
 
                 <div class="form-group" layout="row" flex>

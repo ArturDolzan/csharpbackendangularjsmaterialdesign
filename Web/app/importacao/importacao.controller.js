@@ -581,7 +581,7 @@
           });
 
         $scope.isLoading = false;
-        $scope.showToast('Grafico renderizado com sucesso!');
+        $scope.showToast('Gráfico renderizado com sucesso!');
       }
 
     function DialogController($scope, $mdDialog) {

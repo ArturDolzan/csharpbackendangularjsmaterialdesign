@@ -20,7 +20,7 @@
 
                 <md-input-container class="md-block" md-is-error="carroForm.Descricao.$invalid && (carroForm.$submitted)">                    
                     <label>Descrição</label>                    
-                    <input name="Descricao" id="Descricao" type="text" ng-model="Descricao" ng-required="true" md-maxlength="20">
+                    <input name="Descricao" id="Descricao" type="text" ng-model="Descricao" ng-required="true" md-maxlength="100">
 
                     <div ng-messages="carroForm.Descricao.$error" ng-if="carroForm.$submitted">
                         <div ng-message="required">Preencha este campo!</div>
