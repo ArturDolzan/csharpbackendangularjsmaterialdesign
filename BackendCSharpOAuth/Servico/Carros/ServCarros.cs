@@ -92,7 +92,7 @@ namespace BackendCSharpOAuth.Servico
 
             if (validarImportacoes != null)
             {
-                throw new Exception("Nao e possivel remover este carro, pois importacoes dependem deste registro!");
+                throw new Exception("Não é possível remover este carro, pois importações dependem deste registro!");
             }
 
             var registro = RecuperarPorId(dto);

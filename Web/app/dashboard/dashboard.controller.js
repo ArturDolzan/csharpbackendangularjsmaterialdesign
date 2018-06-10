@@ -120,11 +120,11 @@
                 }
             },
             series: [{
-                name: 'Maxima',
+                name: 'Máxima',
                 data: dtoMax
         
             }, {
-                name: 'Minima',
+                name: 'Mínima',
                 data: dtoMin
         
             }]

@@ -30,7 +30,7 @@ namespace BackendCSharpOAuth.Controllers
 
                 var retorno = _servImportacao.RecuperarImportacoesComparacao(dto);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Importacoes recuperadas com sucesso!" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = retorno, Mensagem = "Importações recuperadas com sucesso!" });
             }
             catch (System.Exception e)
             {
@@ -45,7 +45,7 @@ namespace BackendCSharpOAuth.Controllers
 
                 var grafico = _servImportacao.RecuperarGraficoBarra();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Grafico de barras recuperado com sucesso!" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Gráfico de barras recuperado com sucesso!" });
             }
             catch (System.Exception e)
             {
@@ -60,7 +60,7 @@ namespace BackendCSharpOAuth.Controllers
 
                 var grafico = _servImportacao.RecuperarGraficoPizza();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Grafico de pizza recuperado com sucesso!" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Gráfico de pizza recuperado com sucesso!" });
             }
             catch (System.Exception e)
             {
@@ -75,7 +75,7 @@ namespace BackendCSharpOAuth.Controllers
 
                 var grafico = _servImportacao.RecuperarNomeColunas(dto);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Colunas grafico recuperadas com sucesso!" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Colunas gráfico recuperadas com sucesso!" });
             }
             catch (System.Exception e)
             {
@@ -90,7 +90,7 @@ namespace BackendCSharpOAuth.Controllers
 
                 var grafico = _servImportacao.RecuperarGraficoComparacao(dto);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Grafico comparacao recuperado com sucesso!" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Gráfico comparacao recuperado com sucesso!" });
             }
             catch (System.Exception e)
             {
@@ -105,7 +105,7 @@ namespace BackendCSharpOAuth.Controllers
 
                 var grafico = _servImportacao.RecuperarGrafico(dto);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Grafico recuperado com sucesso!" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Content = grafico, Mensagem = "Gráfico recuperado com sucesso!" });
             }
             catch (System.Exception e)
             {
