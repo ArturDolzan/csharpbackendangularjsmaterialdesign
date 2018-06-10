@@ -29,6 +29,12 @@ MyApp.config(function ($routeProvider, $locationProvider ) {
     });
 });
 
+MyApp.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue')
+    .accentPalette('orange');
+});
+
 
 
 MyApp.config(function ($mdDateLocaleProvider) {

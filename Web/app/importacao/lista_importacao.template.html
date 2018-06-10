@@ -25,10 +25,10 @@
         <md-content flex>
 
             <md-list>
-                <md-list-item class="md-3-line" ng-repeat="importacao in importacoes">
+                <md-list-item class="md-3-line" ng-click="editarImportacao(importacao.Id)" ng-repeat="importacao in importacoes">
 
-                    <div class="md-list-item-text" ng-dblclick="editarImportacao(importacao.Id)">
-                        <h3>{{importacao.Id}}</h3>
+                    <div class="md-list-item-text">
+                        <h4>{{importacao.Id}}</h4>
                         <h4>{{importacao.DataImportacao | date:'dd-MM-yyyy'}}</h4>
                         <h4>{{importacao.Descricao}}</h4>
                         <h4>{{importacao.Observacao}}</h4>

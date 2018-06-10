@@ -26,10 +26,10 @@
         <md-content flex>
             <!-- show carros record list -->
             <md-list >
-                <md-list-item class="md-3-line" ng-repeat="carro in carros">
+                <md-list-item class="md-3-line" ng-click="editarCarro(carro.Id)" ng-repeat="carro in carros">
 
                     <!-- carro information -->
-                    <div class="md-list-item-text" ng-dblclick="editarCarro(carro.Id)">
+                    <div class="md-list-item-text" >
                         <h3>{{carro.Id}}</h3>
                         <h4>{{carro.Descricao}}</h4>
                     </div>
