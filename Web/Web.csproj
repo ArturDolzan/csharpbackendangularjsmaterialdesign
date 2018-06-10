@@ -903,6 +903,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="app\dashboard\dashboard.controller.js" />
     <Content Include="app\assets\img\diagram.svg" />
+    <Content Include="app\assets\img\cancel-window.svg" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

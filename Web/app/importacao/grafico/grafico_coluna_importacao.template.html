@@ -1,9 +1,14 @@
 ﻿<md-dialog>
+
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>Categoria</h2>
+            <h2 flex md-truncate>Categoria</h2>
+            <md-button class="md-icon-button" aria-label="Favorite" ng-click="cancel()">
+                <md-icon md-svg-icon="app/assets/img/cancel-window.svg" class="favorite-icon"></md-icon>
+            </md-button>
         </div>
     </md-toolbar>
+
     <md-dialog-content>
         <div class="container" ng-init="graficoColunaCriar()">
 
@@ -38,7 +43,7 @@
                 </div>
             </div>
         </div>
-        </md-dialog-content>
+    </md-dialog-content>
     <md-progress-circular md-mode="indeterminate" style="display:inline; position:fixed; bottom:50%; left:50%;" ng-show="isLoading"></md-progress-circular>
     <md-dialog-actions layout="row">
         <md-button ng-click="cancel()">Fechar</md-button>
