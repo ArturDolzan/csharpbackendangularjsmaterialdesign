@@ -1,6 +1,6 @@
 ﻿md-dialog {
     width: 75%;
-    min-height:300px;
+    min-height:200px;
 }
 
 md-progress-circular svg path {
