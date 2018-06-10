@@ -487,11 +487,13 @@
 
       $scope.graficoColunaCriar = function(){
 
+            $scope.isLoading = true;
             importacaoFactory.recuperarGraficoColunas($scope.Id).then(function successCallback(response){
-                
+                $scope.isLoading = false;
                 $scope.importacoesColuna = response.data.Content;
-            }, function errorCallback(response){
-                    $scope.showToast(response.data.Mensagem);
+            }, function errorCallback(response) {
+                $scope.isLoading = false;
+                $scope.showToast(response.data.Mensagem);
             });
 
       }
