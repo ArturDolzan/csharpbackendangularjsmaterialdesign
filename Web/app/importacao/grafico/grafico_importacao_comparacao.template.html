@@ -19,7 +19,7 @@
 
                         <div class="demo-select-all-checkboxes" flex="100" ng-repeat="item in itemImportacoesObj">
                             <md-checkbox ng-checked="existe(item.Id, selectedImportacoes)" ng-click="toggle(item.Id, selectedImportacoes)">
-                                {{ item.Descricao }}
+                                {{ item.Id }} - {{ item.Descricao }}
                             </md-checkbox>
                         </div>
                     </div>
