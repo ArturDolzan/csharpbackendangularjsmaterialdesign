@@ -27,7 +27,7 @@ namespace BackendCSharpOAuth.Servico
 
         public List<Importacao> RecuperarImportacoesComparacao(CodigoPadraoDTO dto)
         {
-            var registros = _db.Importacao.Where(x=>x.Id != dto.Id);
+            var registros = _db.Importacao.Where(x=>x.Id != dto.Id).OrderByDescending(x=>x.Id);
 
             var listImportacao = new List<Importacao>();
 
