@@ -204,7 +204,7 @@ namespace BackendCSharpOAuth.Servico
 
         public List<Importacao> PesquisarImportacao(PesquisaDTO dto)
         {
-            var registros = _db.Importacao.Include("Carros").Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit);
+            var registros = _db.Importacao.Include("Carros").Where(x => x.Descricao.ToUpper().Contains(dto.ValorPesquisa.ToUpper())).OrderByDescending(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit);
 
             var listImportacao = new List<Importacao>();
 
@@ -235,7 +235,7 @@ namespace BackendCSharpOAuth.Servico
 
         public List<Importacao> Listar(QueryPaginacaoDTO dto)
         {
-            var registros = _db.Importacao.Include("Carros").OrderBy(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit);
+            var registros = _db.Importacao.Include("Carros").OrderByDescending(x => x.Id).Skip((dto.Page - 1) * dto.Limit).Take(dto.Limit);
 
             var listImportacao = new List<Importacao>();
 
