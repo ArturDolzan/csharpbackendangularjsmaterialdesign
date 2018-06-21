@@ -190,14 +190,22 @@ namespace BackendCSharpOAuth.Controllers
 
                     arquivo.SaveAs(fileSavePath);
                 }
+            
+                CultureInfo[] cultures = { new CultureInfo("pt-BR") };
+
+                var observacao = Convert.ToString(HttpContext.Current.Request.Form[3]);
+                if (observacao == "undefined")
+                {
+                    observacao = "";
+                }
 
                 var importacao = new Importacao
                 {
                     Carros = new Carros { Id = Convert.ToInt32(HttpContext.Current.Request.Form[4]) },
-                    DataImportacao = Convert.ToDateTime(HttpContext.Current.Request.Form[1]).Date,
+                    DataImportacao = Convert.ToDateTime(HttpContext.Current.Request.Form[1], cultures[0]),
                     Descricao = Convert.ToString(HttpContext.Current.Request.Form[0]),
                     Id = Convert.ToInt32(HttpContext.Current.Request.Form[2]),
-                    Observacao = Convert.ToString(HttpContext.Current.Request.Form[3])
+                    Observacao = observacao
                 };
 
                 var retorno = _servImportacao.Salvar(importacao, fileSavePath);

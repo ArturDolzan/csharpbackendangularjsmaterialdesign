@@ -262,7 +262,7 @@ namespace BackendCSharpOAuth.Servico
         public Importacao Salvar(Importacao importacao, string caminhoArquivo)
         {
             var registro = _db.Importacao.FirstOrDefault(x => x.Id == importacao.Id);
-
+           
             if (registro == null)
             {
                 if (caminhoArquivo != null)
@@ -340,8 +340,10 @@ namespace BackendCSharpOAuth.Servico
                 foreach (var valores in dado.Skip(1).ToList())
                 {
                     var coluna = colunas[controle];
-                    var dataV = data.Substring(0, data.IndexOf(","));
-
+                    string dataV;
+                    
+                    dataV = data.Substring(0, data.IndexOf(","));
+                  
                     DateTime d = new DateTime();
                     Decimal v = 0.00M;
 
