@@ -168,7 +168,7 @@ namespace BackendCSharpOAuth.Servico
                 }
             }
 
-            return listRecuperarGraficoDTO;
+            return listRecuperarGraficoDTO.OrderBy(x=>x.DataLeitura).ToList();
         }
 
         public List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto)
