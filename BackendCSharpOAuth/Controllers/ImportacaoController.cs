@@ -205,7 +205,8 @@ namespace BackendCSharpOAuth.Controllers
                     DataImportacao = Convert.ToDateTime(HttpContext.Current.Request.Form[1], cultures[0]),
                     Descricao = Convert.ToString(HttpContext.Current.Request.Form[0]),
                     Id = Convert.ToInt32(HttpContext.Current.Request.Form[2]),
-                    Observacao = observacao
+                    Observacao = observacao,
+                    TipoImportacao = Convert.ToInt32(HttpContext.Current.Request.Form[5])
                 };
 
                 var retorno = _servImportacao.Salvar(importacao, fileSavePath);

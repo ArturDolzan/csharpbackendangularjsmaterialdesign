@@ -25,6 +25,11 @@
         qtde: 5
     };
 
+    $scope.data = {
+        TipoImportacao : '0',
+        Desabilitado: false
+    };
+
     function loadPages() {
         
         $scope.currentPage = $scope.paging.current;
@@ -87,6 +92,11 @@
         $scope.show_filters = true;
         $scope.DataImportacao = new Date();
 
+        $scope.data = {
+            TipoImportacao : '0',
+            Desabilitado: false
+        };
+
         $mdDialog.show({
             controller: DialogController,
             templateUrl: './app/importacao/cadastro_importacao.template.html',
@@ -106,6 +116,7 @@
         var url = urlApi.url;
 
         if(!$scope.Id){
+
             if(!$scope.arquivo){
                 $scope.isLoading = false;
                 $scope.showToast("Selecione o arquivo para salvar...");
@@ -130,8 +141,9 @@
             formData.append('Descricao', $scope.Descricao);
             formData.append('DataImportacao', dateT);
             formData.append('Id', 0);
-            formData.append('Observacao', $scope.Observacao);
+            formData.append('Observacao', $scope.Observacao);          
             formData.append('Carros', $scope.carro.Id);
+            formData.append('TipoImportacao', $scope.data.TipoImportacao);
 
             xhr.open('POST', url + '/api/Importacao/SalvarImportacao', true);
 
@@ -192,6 +204,7 @@
         $scope.Descricao = "";
         $scope.DataImportacao = "";
         $scope.Observacao = "";
+        $scope.data.TipoImportacao = 0;
 
         $scope.carros = [];
     },
@@ -206,9 +219,12 @@
             $scope.Descricao = response.data.Content.Descricao;
             $scope.DataImportacao = response.data.Content.DataImportacao;
             $scope.Observacao = response.data.Content.Observacao;
+            $scope.data.TipoImportacao = response.data.Content.TipoImportacao;
             
             $scope.carros.push(response.data.Content.Carros);
             $scope.carro = response.data.Content.Carros;
+
+            $scope.data.Desabilitado = true;
 
             $mdDialog.show({
                 controller: DialogController,

@@ -37,6 +37,11 @@ namespace BackendCSharpOAuth.Models.Configuracao
                 .IsOptional()
                 .HasMaxLength(4000);
 
+            this.Property(x => x.TipoImportacao)
+                .HasColumnName("TipoImportacao")
+                .HasColumnOrder(4)
+                .IsRequired();
+
             //this.Property(x => x.Carros_Id)
             //    .HasColumnName("Carros_Id")
             //    .HasColumnOrder(4)

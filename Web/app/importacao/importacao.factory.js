@@ -33,6 +33,7 @@
                 'DataImportacao': $scope.DataImportacao,
                 'Id': $scope.Id,
                 'Observacao': $scope.Observacao,
+                'TipoImportacao': $scope.data.TipoImportacao,
                 'Carros': $scope.carro
             },
             url: url +'/api/Importacao/Salvar'

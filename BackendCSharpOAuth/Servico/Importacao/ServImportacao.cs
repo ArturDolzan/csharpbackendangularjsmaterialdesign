@@ -305,6 +305,7 @@ namespace BackendCSharpOAuth.Servico
             registro.Carros = importacao.Carros;
             registro.DataImportacao = importacao.DataImportacao;
             registro.Observacao = importacao.Observacao;
+            registro.TipoImportacao = importacao.TipoImportacao;
             
 
             try
@@ -394,7 +395,8 @@ namespace BackendCSharpOAuth.Servico
                 x.DataImportacao,
                 x.Descricao,
                 x.Id,
-                x.Observacao
+                x.Observacao,
+                x.TipoImportacao
             }).FirstOrDefault(x => x.Id == dto.Id);
 
             if (registro == null)
@@ -408,7 +410,8 @@ namespace BackendCSharpOAuth.Servico
                 DataImportacao = registro.DataImportacao,
                 Descricao = registro.Descricao,
                 Id = registro.Id,
-                Observacao = registro.Observacao
+                Observacao = registro.Observacao,
+                TipoImportacao = registro.TipoImportacao
             };
 
             return importacao;

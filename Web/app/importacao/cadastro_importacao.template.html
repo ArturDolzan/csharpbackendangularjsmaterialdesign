@@ -27,6 +27,15 @@
                         </md-input-container>
                     </div>
 
+                    <div flex-gt-xs>
+                        <md-radio-group ng-model="data.TipoImportacao">
+
+                            <md-radio-button value="0" ng-disabled="data.Desabilitado" class="md-primary">Por data</md-radio-button>
+                            <md-radio-button value="1" ng-disabled="data.Desabilitado">Por sequencial </md-radio-button>
+
+                        </md-radio-group>
+                    </div>
+
                 </div>
 
                 <md-input-container class="md-block" md-is-error="importacaoForm.Descricao.$invalid && (importacaoForm.$submitted)">
