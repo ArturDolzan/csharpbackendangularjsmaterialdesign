@@ -10,6 +10,7 @@ namespace BackendCSharpOAuth.Models
         public int Id { get; set; }
         public string NomeColuna { get; set; }
         public DateTime DataLeitura { get; set; }
+        public int Sequencial { get; set; }
         public decimal ValorLeitura { get; set; }
 
         public int CodigoImportacao { get; set; }        

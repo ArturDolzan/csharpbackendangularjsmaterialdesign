@@ -39,6 +39,11 @@ namespace BackendCSharpOAuth.Models.Configuracao
                 .HasColumnName("CodigoImportacao")
                 .HasColumnOrder(4);
 
+            this.Property(x => x.Sequencial)
+                .HasColumnName("Sequencial")
+                .HasColumnOrder(5)
+                .IsOptional();
+
             HasRequired(x => x.Importacao)
                 .WithMany()
                 .HasForeignKey(x => x.CodigoImportacao);

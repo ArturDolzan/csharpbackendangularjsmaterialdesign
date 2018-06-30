@@ -39,7 +39,8 @@ namespace BackendCSharpOAuth.Servico
                     DataImportacao = item.DataImportacao,
                     Descricao = item.Descricao,
                     Id = item.Id,
-                    Observacao = item.Observacao
+                    Observacao = item.Observacao,
+                    TipoImportacao = item.TipoImportacao
                 };
 
                 listImportacao.Add(importacao);
@@ -125,76 +126,204 @@ namespace BackendCSharpOAuth.Servico
 
         public List<RecuperarGraficoDTO> RecuperarGraficoComparacao(RecuperarGraficoCargaComparacaoDTO dto)
         {
-            var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacaoPrincipal && x.NomeColuna == dto.NomeColuna).Select(p => new
-            {
-                p.DataLeitura,
-                p.ValorLeitura,
-                p.CodigoImportacao
-            }).OrderBy(p => p.DataLeitura).ToList();
+            int tipo = 0;
 
-            var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
-
-            foreach (var item in retorno)
-            {
-                var recuperarGraficoDTO = new RecuperarGraficoDTO()
-                {
-                    DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
-                    ValorLeitura = item.ValorLeitura,
-                    CodigoImportacao = item.CodigoImportacao
-                };
-
-                listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
-            }
+            var tipoImportacaoPadrao = _db.Importacao.FirstOrDefault(x => x.Id == dto.CodigoImportacaoPrincipal).TipoImportacao;
 
             foreach (var item in dto.CodigoImportacao)
             {
-                var retornoComp = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == item && x.NomeColuna == dto.NomeColuna).Select(p => new
+                tipo = _db.Importacao.FirstOrDefault(x => x.Id == item).TipoImportacao;
+
+                if (tipoImportacaoPadrao != tipo)
+                {
+                    throw new Exception("Somente é possível comparar importações do mesmo tipo!");
+                }
+            }
+
+            if (tipoImportacaoPadrao == 1)
+            {
+                var qtde = dto.CodigoImportacao.Count();
+
+                if (qtde != 1)
+                {
+                    throw new Exception("Para comparar por Pontos sequenciais, é permitido selecionar apenas 2 importações");
+                }
+            }
+
+            if (tipoImportacaoPadrao == 0)
+            {
+                var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacaoPrincipal && x.NomeColuna == dto.NomeColuna).Select(p => new
+                {
+                    p.DataLeitura,
+                    p.ValorLeitura,
+                    p.CodigoImportacao,
+                    p.Sequencial
+                }).OrderBy(p => p.DataLeitura).ToList();
+
+                var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
+
+                foreach (var item in retorno)
+                {
+                    var recuperarGraficoDTO = new RecuperarGraficoDTO()
+                    {
+                        DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                        ValorLeitura = item.ValorLeitura,
+                        CodigoImportacao = item.CodigoImportacao,
+                        Sequencial = item.Sequencial,
+                        TipoImportacao = tipoImportacaoPadrao
+                    };
+
+                    listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
+                }
+
+                foreach (var item in dto.CodigoImportacao)
+                {
+                    var retornoComp = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == item && x.NomeColuna == dto.NomeColuna).Select(p => new
+                    {
+                        p.DataLeitura,
+                        p.ValorLeitura,
+                        p.CodigoImportacao,
+                        p.Sequencial
+                    }).OrderBy(p => p.DataLeitura).ToList();
+
+                    foreach (var itemRet in retornoComp)
+                    {
+                        var recuperarGraficoCompDTO = new RecuperarGraficoDTO()
+                        {
+                            DataLeitura = itemRet.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                            ValorLeitura = itemRet.ValorLeitura,
+                            CodigoImportacao = itemRet.CodigoImportacao,
+                            Sequencial = itemRet.Sequencial,
+                            TipoImportacao = tipoImportacaoPadrao
+                        };
+
+                        listRecuperarGraficoDTO.Add(recuperarGraficoCompDTO);
+                    }
+                }
+
+                return listRecuperarGraficoDTO.OrderBy(x => x.DataLeitura).ToList();
+            }
+            else
+            {
+                var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacaoPrincipal && x.NomeColuna == dto.NomeColuna).Select(p => new
+                {
+                    p.DataLeitura,
+                    p.ValorLeitura,
+                    p.CodigoImportacao,
+                    p.Sequencial
+                }).OrderBy(p => p.Sequencial).ToList();
+
+                var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
+
+                foreach (var item in retorno)
+                {
+                    var recuperarGraficoDTO = new RecuperarGraficoDTO()
+                    {
+                        DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                        ValorLeitura = item.ValorLeitura,
+                        CodigoImportacao = item.CodigoImportacao,
+                        Sequencial = item.Sequencial,
+                        TipoImportacao = tipoImportacaoPadrao,
+                        CodigoImportacaoPrincipal = dto.CodigoImportacaoPrincipal,
+                        CodigoImportacaoSecundaria = dto.CodigoImportacao[0]
+                    };
+
+                    listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
+                }
+
+                foreach (var item in dto.CodigoImportacao)
+                {
+                    var retornoComp = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == item && x.NomeColuna == dto.NomeColuna).Select(p => new
+                    {
+                        p.DataLeitura,
+                        p.ValorLeitura,
+                        p.CodigoImportacao,
+                        p.Sequencial
+                    }).OrderBy(p => p.Sequencial).ToList();
+
+                    foreach (var itemRet in retornoComp)
+                    {
+                        var recuperarGraficoCompDTO = new RecuperarGraficoDTO()
+                        {
+                            DataLeitura = itemRet.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                            ValorLeitura = itemRet.ValorLeitura,
+                            CodigoImportacao = itemRet.CodigoImportacao,
+                            Sequencial = itemRet.Sequencial,
+                            TipoImportacao = tipoImportacaoPadrao,
+                            CodigoImportacaoPrincipal = dto.CodigoImportacaoPrincipal,
+                            CodigoImportacaoSecundaria = dto.CodigoImportacao[0]
+                        };
+
+                        listRecuperarGraficoDTO.Add(recuperarGraficoCompDTO);
+                    }
+                }
+
+                return listRecuperarGraficoDTO.OrderBy(x => x.Sequencial).ToList();
+            }
+
+            
+        }
+
+        public List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto)
+        {
+            var tipoImportacao = _db.Importacao.FirstOrDefault(x => x.Id == dto.CodigoImportacao).TipoImportacao;
+
+            if (tipoImportacao == 0)
+            {
+                var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao && x.NomeColuna == dto.NomeColuna).Select(p => new
                 {
                     p.DataLeitura,
                     p.ValorLeitura,
                     p.CodigoImportacao
                 }).OrderBy(p => p.DataLeitura).ToList();
 
-                foreach (var itemRet in retornoComp)
+                var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
+
+                foreach (var item in retorno)
                 {
-                    var recuperarGraficoCompDTO = new RecuperarGraficoDTO()
+                    var recuperarGraficoDTO = new RecuperarGraficoDTO()
                     {
-                        DataLeitura = itemRet.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
-                        ValorLeitura = itemRet.ValorLeitura,
-                        CodigoImportacao = itemRet.CodigoImportacao
+                        DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                        ValorLeitura = item.ValorLeitura,
+                        CodigoImportacao = item.CodigoImportacao,
+                        TipoImportacao = tipoImportacao,
+                        Sequencial = 0
                     };
 
-                    listRecuperarGraficoDTO.Add(recuperarGraficoCompDTO);
+                    listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
                 }
+
+                return listRecuperarGraficoDTO;
             }
-
-            return listRecuperarGraficoDTO.OrderBy(x=>x.DataLeitura).ToList();
-        }
-
-        public List<RecuperarGraficoDTO> RecuperarGrafico(RecuperarGraficoCargaDTO dto)
-        {
-            var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao && x.NomeColuna == dto.NomeColuna).Select(p => new
+            else
             {
-                p.DataLeitura,
-                p.ValorLeitura,
-                p.CodigoImportacao
-            }).OrderBy(p => p.DataLeitura).ToList();
-
-            var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
-
-            foreach (var item in retorno)
-            {
-                var recuperarGraficoDTO = new RecuperarGraficoDTO()
+                var retorno = _db.ImportacaoColunas.Where(x => x.CodigoImportacao == dto.CodigoImportacao && x.NomeColuna == dto.NomeColuna).Select(p => new
                 {
-                    DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
-                    ValorLeitura = item.ValorLeitura,
-                    CodigoImportacao = item.CodigoImportacao
-                };
+                    p.DataLeitura,
+                    p.ValorLeitura,
+                    p.CodigoImportacao,
+                    p.Sequencial
+                }).OrderBy(p => p.Sequencial).ToList();
 
-                listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
+                var listRecuperarGraficoDTO = new List<RecuperarGraficoDTO>();
+
+                foreach (var item in retorno)
+                {
+                    var recuperarGraficoDTO = new RecuperarGraficoDTO()
+                    {
+                        DataLeitura = item.DataLeitura.ToString("dd/MM/yyyy HH:mm:ss"),
+                        ValorLeitura = item.ValorLeitura,
+                        CodigoImportacao = item.CodigoImportacao,
+                        Sequencial = item.Sequencial,
+                        TipoImportacao = tipoImportacao
+                    };
+
+                    listRecuperarGraficoDTO.Add(recuperarGraficoDTO);
+                }
+
+                return listRecuperarGraficoDTO;
             }
-
-            return listRecuperarGraficoDTO;
+            
         }
 
         public List<Carros> ListarCarros()
@@ -287,15 +416,31 @@ namespace BackendCSharpOAuth.Servico
                     throw new Exception(e.InnerException.InnerException.Message);
                 }
 
-                try
+                //data
+                if (importacao.TipoImportacao == 0)
                 {
-                    ImportarDados(caminhoArquivo, importacao.Id);
+                    try
+                    {
+                        ImportarDados(caminhoArquivo, importacao.Id);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Erro ao importar arquivo. Erro: " + e.Message);
+                    }
                 }
-                catch (Exception e)
-                {                    
-                    throw new Exception("Erro ao importar arquivo. Erro: " + e.Message);
+                else
+                {
+                    try
+                    {
+                        ImportarDadosSequencial(caminhoArquivo, importacao.Id);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Erro ao importar arquivo. Erro: " + e.Message);
+                    }
                 }
 
+                
                 importacao.ImportacaoColunas = null;
 
                 return importacao;
@@ -363,7 +508,8 @@ namespace BackendCSharpOAuth.Servico
                         CodigoImportacao = codigoImportacao,
                         DataLeitura = d,
                         NomeColuna = coluna,
-                        ValorLeitura = v
+                        ValorLeitura = v,
+                        Sequencial = 0
                     };
 
                     listImportacaoColunas.Add(importacaoColunas);
@@ -378,14 +524,82 @@ namespace BackendCSharpOAuth.Servico
             foreach (var item in listImportacaoColunas)
             {
                 
-                var sql = "insert into \"ImportacaoColunas\" (\"NomeColuna\", \"DataLeitura\", \"ValorLeitura\", \"CodigoImportacao\")";
-                sql = sql + " values ('" + item.NomeColuna + "', '" + item.DataLeitura + "', " + item.ValorLeitura.ToString().Replace(",", ".") + ", " + item.CodigoImportacao + ") ";
+                var sql = "insert into \"ImportacaoColunas\" (\"NomeColuna\", \"DataLeitura\", \"ValorLeitura\", \"CodigoImportacao\", \"Sequencial\")";
+                sql = sql + " values ('" + item.NomeColuna + "', '" + item.DataLeitura + "', " + item.ValorLeitura.ToString().Replace(",", ".") + ", " + item.CodigoImportacao + ", "+item.Sequencial+") ";
 
                 _db.Database.ExecuteSqlCommand(sql);
             }
 
             _db.Database.CurrentTransaction.Commit();
            
+        }
+
+        public void ImportarDadosSequencial(string arquivo, int codigoImportacao)
+        {
+            //-- Primeira linha, logo deve verificar as colunas...
+            var colunas = File.ReadAllLines(arquivo).Select(x => x.Split(';')).FirstOrDefault();
+
+            var valor = File.ReadAllLines(arquivo).Select(x => x.Split(';')).ToList();
+            var listImportacaoColunas = new List<ImportacaoColunas>();
+
+            CultureInfo[] cultures = { new CultureInfo("en-US") };
+
+
+            foreach (var itemValor in valor.ToList().Skip(1))
+            {
+                var dado = itemValor;
+
+                string sequencial = dado[0];
+                int controle = 1;
+                foreach (var valores in dado.Skip(1).ToList())
+                {
+                    var coluna = colunas[controle];
+                    string sequencialV;
+
+                    sequencialV = sequencial;
+
+                    int s = 0;
+                    Decimal v = 0.00M;
+
+                    try
+                    {
+                        s = Convert.ToInt32(sequencialV);
+                        v = Convert.ToDecimal(valores.Replace(",", "."), cultures[0]);//Convert.ToDecimal(valores);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+
+                    var importacaoColunas = new ImportacaoColunas
+                    {
+                        CodigoImportacao = codigoImportacao,
+                        DataLeitura = DateTime.Now,
+                        Sequencial = s,
+                        NomeColuna = coluna,
+                        ValorLeitura = v
+                    };
+
+                    listImportacaoColunas.Add(importacaoColunas);
+
+                    controle = controle + 1;
+                }
+            }
+
+
+            _db.Database.BeginTransaction();
+
+            foreach (var item in listImportacaoColunas)
+            {
+
+                var sql = "insert into \"ImportacaoColunas\" (\"NomeColuna\", \"DataLeitura\", \"ValorLeitura\", \"CodigoImportacao\", \"Sequencial\")";
+                sql = sql + " values ('" + item.NomeColuna + "', '" + item.DataLeitura + "', " + item.ValorLeitura.ToString().Replace(",", ".") + ", " + item.CodigoImportacao + ", "+ item.Sequencial +") ";
+
+                _db.Database.ExecuteSqlCommand(sql);
+            }
+
+            _db.Database.CurrentTransaction.Commit();
+
         }
 
         public Importacao RecuperarPorId(CodigoPadraoDTO dto)

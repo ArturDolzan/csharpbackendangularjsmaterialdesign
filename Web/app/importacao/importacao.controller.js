@@ -91,6 +91,7 @@
     $scope.showNovaImportacaoForm = function (event) {
         $scope.show_filters = true;
         $scope.DataImportacao = new Date();
+        $scope.Id = null;
 
         $scope.data = {
             TipoImportacao : '0',
@@ -418,16 +419,113 @@
             } 
       },
 
+      $scope.graficoComparacaoSequencialRenderizar = function (dto){
+
+        $scope.principal = [];
+        $scope.secundaria = [];
+        var tipoImportacao = 0,
+            tipoImportacaoP = 0,
+            tipoImportacaoS = 0;
+
+        $.each(dto, function( index, value ) {
+            
+            tipoImportacao = value.TipoImportacao;
+
+            if(value.CodigoImportacaoPrincipal == value.CodigoImportacao){
+                $scope.principal.push(value.ValorLeitura);
+                tipoImportacaoP = value.CodigoImportacaoPrincipal;
+            }
+
+            if(value.CodigoImportacaoSecundaria == value.CodigoImportacao){
+                $scope.secundaria.push(value.ValorLeitura);
+                tipoImportacaoS = value.CodigoImportacaoSecundaria;
+            }
+
+        });
+
+        Highcharts.chart('graficoComparacao', {
+
+            title: {
+                text: $scope.NomeColuna
+              },
+        
+            subtitle: {
+                text: tipoImportacao == 0 ? "Data de leitura" : "Pontos sequenciais"
+            },
+        
+            yAxis: {
+                title: {
+                    text: 'Temperatura (C)'
+                }
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+        
+            plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                    pointStart: 2010
+                }
+            },
+        
+            series: [{
+                name: 'Importação ' + tipoImportacaoP,
+                data: $scope.principal
+            }, {
+                name: 'Importação ' + tipoImportacaoS,
+                data: $scope.secundaria
+            }],
+        
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        
+        });
+
+        $scope.isLoading = false;
+   
+      },
+
       $scope.graficoComparacaoRenderizar = function (dto){
 
         $scope.labels = [];
         $scope.data = [];
+        var tipoImportacao = 0;
 
         $.each(dto, function( index, value ) {
-            $scope.labels.push('Imp. ' +value.CodigoImportacao + ' - ' + value.DataLeitura);
+            
+            tipoImportacao = value.TipoImportacao;
+
+            if(value.TipoImportacao == 0){
+                $scope.labels.push('Imp. ' +value.CodigoImportacao + ' - ' + value.DataLeitura);
+            }else{
+                $scope.labels.push('Imp. ' +value.CodigoImportacao + ' - ' + value.Sequencial);
+            }
 
             $scope.data.push(value.ValorLeitura);
         });
+
+        if(tipoImportacao == 1){
+            $scope.graficoComparacaoSequencialRenderizar(dto);
+            return;
+        }
 
         Highcharts.chart('graficoComparacao', {
             chart: {
@@ -449,6 +547,10 @@
 
             title: {
               text: $scope.NomeColuna
+            },
+
+            subtitle: {
+                text: tipoImportacao == 0 ? "Data de leitura" : "Pontos sequenciais"
             },
       
             yAxis: {
@@ -554,9 +656,18 @@
 
         $scope.labels = [];
         $scope.data = [];
+        var tipoImportacao = 0;
 
         $.each(dto, function( index, value ) {
-            $scope.labels.push(value.DataLeitura);
+
+            tipoImportacao = value.TipoImportacao;
+
+            if(value.TipoImportacao == 0){
+                $scope.labels.push(value.DataLeitura);
+            }else{
+                $scope.labels.push(value.Sequencial);
+            }
+            
             $scope.data.push(value.ValorLeitura);
         });
 
@@ -580,6 +691,10 @@
 
             title: {
               text: $scope.NomeColuna
+            },
+
+            subtitle: {
+                text: tipoImportacao == 0 ? "Data de leitura" : "Pontos sequenciais"
             },
       
             yAxis: {
